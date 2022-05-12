@@ -15,3 +15,6 @@ type r:
 then setup
 
 use license code 24796-OEM-0014736-66386
+
+boot it and run with fix the CPU.IMA thing when you get the error
+then boom
