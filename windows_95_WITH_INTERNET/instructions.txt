@@ -20,7 +20,7 @@ FOLLOWING ALONG
 
 mapi32.dll will be in C:/FDD/WIN95_09 no matter what. If it's not, then you can always put it in there yourself.
 
-The rest of the files will probably be copied automatically. (I'm so sorry if they don't, this thing is really old)
+The rest of the files will probably be copied automatically. (I'm so sorry if they don't, I did not plan for this contingency)
 
 LATER ON, AND THIS IS IMPORTANT BECAUSE IT'S NOT IN THE FORUM:
 
