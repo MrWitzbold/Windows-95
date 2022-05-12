@@ -1,0 +1,87 @@
+// JavaScript Document
+
+var iw_translations = {
+	'current_lang': 'us',
+	'error_occurred': 'An error has occurred', // A UTILISER aussi DANS COMMON JS - LINE 139
+	'unknown_resource_type': 'Unknown resource type',
+	
+	// Commentaires
+	'edit': 'Edit',
+	'reply': 'Reply',
+	'validated': 'Validated',
+	'error_occured_comm_validation': 'An error occurred while validating the comment',
+	'error_occured_comm_spam': 'An error occurred while marking the comment as SPAM',
+	'cancel': 'Cancel',
+	'are_you_sure': 'Are you sure ?',
+	'are_you_sure_to_edit_comm': 'Are you sure you want to cancel the editing this comment ?',
+	'are_you_sure_to_del_comm': 'Are you sure you want to delete this comment ?',
+	'are_you_sure_to_del_comm_and_answers': 'Are you sure you want to delete this comment and its answers (+ sub-answers, ...) ?',
+	'comments': 'comments',
+	'registered': 'Registered',
+	'seen': 'Seen',
+	'error_occured_get_user_infos': 'An error occurred while retrieving the user infos',
+	
+	// Livre d'or
+	'awaiting_validation': 'Awaiting validation',
+	'are_you_sure_to_cancel_msg_edit': 'Are you sure you want to cancel editing this message ?',
+	'are_you_sure_to_del_msg': 'Are you sure you want to delete this message ?',
+	
+	// Favoris
+	'no_course_in_favorites': 'You have not added any course to your favorites.',
+	'no_tuto_in_favorites': 'You have not added any tutorial to your favorites.',
+	
+	// Sondage
+	'survey': 'Survey',
+	'welcome_to_survey': 'Welcome to this survey !',
+	'thanks_to_join_this_survey': 'Thank you in advance for wanting <strong>to help us improve our website</strong>.',
+	'your_opinion_is_important': 'Indeed, your opinion is very important to us.',
+	'subject': 'Subject',
+	'answers_will_not_be_shared': 'The answers provided will not be shared with third parties and will be used only to improve our website, courses, ...',
+	'access_to_survey': 'Access the survey',
+	'survey_already_completed': 'You have already completed this survey ! Thank you for your answers.',
+	'profile_questions': 'Profile questions',
+	'profile_infos_help_us': 'These informations will allow us to better interpret your answers and to be able to better meet your expectations.',
+	'if_you_have_an_account': 'If you already have an account on our website',
+	'login_url': '/member/login',
+	'login_to_it': 'log in to this one',
+	'to_skip_this_step': 'to skip this step.',
+	'what_your_name': 'What\'s your first name or username ?',
+	'what_your_gender': 'What\'s your gender ?',
+	'man': 'Man',
+	'women': 'Women',
+	'other': 'Other',
+	'what_your_born_date': 'What\'s your born date ?',
+	'date_format': 'mm/dd/yyyy',
+	'what_your_status': 'What\'s your status ?',
+	'individual': 'Individual',
+	'professional': 'Professional',
+	'next': 'Next',
+	'please_check_form_below': 'Please check the form below',
+	'this_field_is_incorrect': 'This field is incorrect',
+	'optional': 'optional',
+	'thanks': 'Thank you',
+	'thanks_to_completed_this_survey': 'Thank you for participating in this survey !',
+	'your_answers_help_us': 'Your answers will help us improve our website.',
+	'support_us_follow_us': 'Support us by following us on social networks',
+	'support_us_on_utip': 'Support us via uTip',
+	'follow_us_on': 'Follow us via',
+	'support_us_also_on_utip': 'Also support us via uTip',
+	'donate_by_utip_img': 'support-us-via-utip.jpg',
+	'close': 'Close',
+	
+	// Changement de sondage
+	'a_survey_is_already_open': 'A survey is already open in the background',
+	'do_you_want_to_finish_prev_survey': 'Do you want to complete the previous survey or respond to the new survey (which you tried to access) ?',
+	'continue_prev_survey': 'Continue previous one',
+	'begin_new_survey': 'Begin the new one',
+	
+	// ajax search
+	'no_result_found': 'No result found',
+	'course': 'Course',
+	
+	'you_are_here': 'You are here',
+	'course_summary': 'Course summary',
+	'error_occured_get_course_summary': 'An error occurred while retrieving the course summary',
+};
+
+$.i18n.load(iw_translations);
