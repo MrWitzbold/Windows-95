@@ -28,3 +28,6 @@ You will want to setup the network through the control panel. To do this you ope
 It will ask for arp.exe, which is on disk 18, AKA C:/FDD/WIN95_18
 
 It will then restart, and you're on motherbadda!!!! you are now using something epic
+
+
+(ALSO, WHEN YOU GET THE WINDOWS PROTECTION ERROR, YOU GOTTA BOOT IT WITH THE FIXCPU.IMA DISKETTE THINGY, THEN REMOVE IT AND REBOOT)
