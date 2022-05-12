@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<!-- saved from url=(0108)https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95-%2D2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/css" media="all">
+
+
+<!-- Required meta tags -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<title>Install Windows 95 with VMware Workstation / Player - VMware - Tutorials - InformatiWeb Pro</title>
+<meta name="description" content="Install Windows 95 in a VMware virtual machine by booting on a bootable floppy disk of Windows 95. With this tutorial, you will be able to install Windows 95 without any errors.">
+<meta name="keywords" content="install Windows 95 drivers network, network, Internet, sound, sound, Sound Blaster PCI 128, Windows Media Player 6.4, fix, protocol, TCP / IP, LAN, LAN">
+
+<meta name="Author" lang="en" content="InformatiWeb">
+
+<meta name="Robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Install Windows 95 with VMware Workstation / Player - VMware - Tutorials">
+<meta property="og:description" content="Install Windows 95 in a VMware virtual machine by booting on a bootable floppy disk of Windows 95. With this tutorial, you will be able to install Windows 95 without any errors."> 
+<meta property="og:url" content="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html"> 
+<meta property="og:image" content="https://us.informatiweb-pro.net/images/tutoriels/logos/us/vmware-workstation-player-install-windows-95.jpg"> 
+<meta property="og:image:secure_url" content="https://us.informatiweb-pro.net/images/tutoriels/logos/us/vmware-workstation-player-install-windows-95.jpg"> 
+<meta property="og:image:type" content="image/jpeg"> 
+<meta property="og:image:width" content="730"> 
+<meta property="og:image:height" content="411"> 
+<meta property="og:site_name" content="InformatiWeb Pro">
+
+<meta property="article:tag" content="install Windows 95 drivers network">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="Internet">
+<meta property="article:tag" content="sound">
+<meta property="article:tag" content="sound">
+<meta property="article:tag" content="Sound Blaster PCI 128">
+<meta property="article:tag" content="Windows Media Player 6.4">
+<meta property="article:tag" content="fix">
+<meta property="article:tag" content="protocol">
+<meta property="article:tag" content="TCP / IP">
+<meta property="article:tag" content="LAN">
+<meta property="article:tag" content="LAN">
+<meta property="article:section" content="VMware">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@InformatiWeb">
+<meta name="twitter:title" content="Install Windows 95 with VMware Workstation / Player - VMware - Tutorials">
+<meta name="twitter:description" content="Install Windows 95 in a VMware virtual machine by booting on a bootable floppy disk of Windows 95. With this tutorial, you will be able to install Windows 95 without any errors.">
+<meta name="twitter:url" content="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html">
+
+<!-- URL absolue de la page -->
+<link rel="canonical" href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html">
+
+<!-- Traductions de la page -->
+<link rel="alternate" hreflang="fr" href="https://www.informatiweb-pro.net/virtualisation/vmware/vmware-workstation-player-installer-windows-95--2.html">
+<link rel="alternate" hreflang="en" href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/bootstrap.min.css" media="all">
+
+<link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/all.min.css" media="all"><link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/css-stars.css" media="all">
+<link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/bars-square.css" media="all">
+
+<link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/styles.css" media="all">
+<link rel="stylesheet" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/styles-iw-pro.css" media="all">
+<link rel="icon" href="https://www.informatiweb.net/favicon.ico">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://www.informatiweb.net/favicon.png">
+
+<!-- Icone pour appareils Apple -->
+<link rel="apple-touch-icon" href="https://www.informatiweb.net/images/site/apple-touch-icon.png">
+
+<!-- Codes de validations Bing, Wot, ... -->
+<meta name="msvalidate.01" content="89E11BA216303BA153B061B960884C89">
+<meta name="wot-verification" content="6cefc7b6b03195d5a43b">
+<meta name="norton-safeweb-site-verification" content="qlq5q-ulde1ydbf7o33twk8qpm58qe84urmukcdprb-b80hr8uw17vz967s2qiwld919r9rv7-zo64dqik8gdlyxx3v7veuypl49tba-qygladigi1fyz9-n7m288q-f">
+<!-- majesticseo.com -->
+<meta name="majestic-site-verification" content="MJ12_5cfa2e3d-67ab-4bd4-a5a4-a17b0fa220cc">
+<meta name="statsnode" content="6245af4e61a7b95c432f691ec386c0ca">
+<meta name="a4071b6f832a2d9" content="e00fee6c610e44492084b8ce76babc23">
+
+<!-- WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name" : "InformatiWeb",
+  "alternateName":"System administration and virtualization",
+  "url": "https://us.informatiweb-pro.net",
+  "image": "https://www.informatiweb.net/images/site/logo.jpg",
+  "sameAs" : [
+    "https://www.facebook.com/InformatiWeb.net",
+    "https://twitter.com/InformatiWeb",
+    "https://utip.io/informatiweb"
+  ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://us.informatiweb-pro.net/search?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
+}
+</script>
+
+<!-- Customizing Your Knowledge Graph - https://developers.google.com/structured-data/customize/overview?hl=fr -->
+<!-- Specifying Your Organization's Logo, social links, ... -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name" : "InformatiWeb",
+  "url": "https://us.informatiweb-pro.net",
+  "logo": "https://www.informatiweb.net/images/site/logo.jpg",
+  "sameAs" : [
+    "https://www.facebook.com/InformatiWeb.net",
+    "https://twitter.com/InformatiWeb",
+    "https://utip.io/informatiweb"
+  ],
+  "employee": [{
+	"@context": "https://schema.org",
+	"@type": "Person",
+	"address": {
+	  "@type": "PostalAddress",
+	  "addressCountry": "BE"
+	},
+	"image": "https://cv.informatiweb.net/images/informatiweb-webmaster.jpg",
+	"jobTitle": "Webmaster",
+	"name": "Lionel EPPE",
+	"url": "https://cv.informatiweb.net",
+	"sameAs" : [
+	  "https://be.linkedin.com/in/lioneleppe"
+	]
+  }]
+}
+</script>
+
+
+<!-- Digidip -->
+<script type="text/plain" cookie-consent="targeting">
+  (function(){
+    var loc = window.location.href;
+    var dd = document.createElement('script'); 
+    dd.type = 'text/javascript'; dd.src = '//static.digidip.net/informatiweb-pro.js?loc=' + loc;
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(dd, s);
+  })();
+</script>
+
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics --> <script type="text/plain" cookie-consent="tracking" async="" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/js"></script>
+<script type="text/plain" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-GWF2FYC71J');
+</script>
+
+	
+<style type="text/css">
+	.termsfeed-com---nb-interstitial{
+		height: 100%;
+	}
+</style>
+
+<style type="text/css"></style></head>
+<body>
+<div id="fb-root"></div>
+	
+
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+	
+  <div id="mobile-menu-toggle" class=""><span>Menu</span> <i class="fas fa-bars"></i></div>
+	
+  <a class="navbar-brand" href="https://us.informatiweb-pro.net/">
+    <img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/brand-logo.png" class="d-inline-block align-top" alt="">
+    InformatiWeb <strong>Pro</strong>
+  </a>
+
+  <div id="top-nav-bar" class="navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="https://us.informatiweb-pro.net/"><i class="fas fa-home"></i> Index</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://us.informatiweb-pro.net/system-admin"><i class="fas fa-user-tie"></i> System admin</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="https://us.informatiweb-pro.net/virtualization"><i class="fas fa-server"></i> Virtualization</a>
+      </li>
+          </ul>
+  </div>
+	
+	<form method="get" id="top-search" class="form-inline my-2 my-lg-0 ml-auto" action="https://us.informatiweb-pro.net/search">
+		<label for="top-search-input"><span class="sr-only">Search</span></label>
+		<input id="top-search-input" class="form-control mr-sm-4 fa-icon recherche ui-autocomplete-input" name="q" type="text" placeholder=" Search" autocomplete="off">
+	</form><div id="member-icon-menu" class="not-connected">
+		<div class="member-avatar">
+						<i class="far fa-user-circle"></i>
+					</div>
+		<div class="member-popup">
+						<p class="connect">Login</p>
+			
+			<form method="post" accept-charset="utf-8" role="form" action="https://us.informatiweb-pro.net/member/login"><div style="display:none;"><input type="hidden" name="_method" class="form-control" value="POST"></div><div class="form-group text"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div><input type="text" name="username" class="form-control" placeholder="Username" id="username"></div></div><div class="form-group password"><div class="input-group"><div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-key"></i></span></div><input type="password" name="password" class="form-control" placeholder="Password" id="password"></div></div><button class="btn-primary btn-sm btn" type="submit">Login</button></form>			
+			<div class="btn-group links" role="group" style="">
+				<a class="btn btn-success register-btn no_replace" href="https://us.informatiweb.net/register.html">Registration</a> 
+				<a class="btn btn-info no_replace" href="https://us.informatiweb.net/lost-password.html">Password lost ?</a>
+			</div>
+						
+		</div>
+	</div>
+	<div class="trad-icon">
+				<a class="no_replace" href="https://www.informatiweb-pro.net/virtualisation/vmware/vmware-workstation-player-installer-windows-95--2.html"><img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/fr.jpg" alt="FR"></a>
+	</div>
+</nav>
+
+
+<nav id="sidebar" style="padding-top: 65px;">
+	
+	<ul><li><a class="nav-link" href="https://us.informatiweb-pro.net/system-admin/win-server">Windows Server</a><ul><li style="--bg-pos: -120px 0;" data-css-var="--bg-pos: -120px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/system-admin/win-server/wms2012">WMS 2012</a></li><li style="--bg-pos: -360px 0;" data-css-var="--bg-pos: -360px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/system-admin/win-server/ws2012-r2">WS2012 R2</a></li><li style="--bg-pos: -420px 0;" data-css-var="--bg-pos: -420px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/system-admin/win-server/ws2016">WS2016</a></li></ul></li><li><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/citrix">Citrix</a><ul><li style="--bg-pos: -180px 0;" data-css-var="--bg-pos: -180px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/citrix/citrix-netscaler-gateway">Citrix NetScaler Gateway</a></li><li style="--bg-pos: -210px 0;" data-css-var="--bg-pos: -210px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/citrix/citrix-xenapp-xendesktop">Citrix XenApp / XenDesktop</a></li><li style="--bg-pos: -240px 0;" data-css-var="--bg-pos: -240px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/citrix/citrix-xenserver">Citrix XenServer</a></li></ul></li><li><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/vmware">VMware</a><ul><li style="--bg-pos: -270px 0;" data-css-var="--bg-pos: -270px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-esxi">VMware ESXi</a></li><li style="--bg-pos: -300px 0;" data-css-var="--bg-pos: -300px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation">VMware Workstation</a></li></ul></li><li><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/microsoft">Microsoft</a><ul><li style="--bg-pos: -330px 0;" data-css-var="--bg-pos: -330px 0;"><a class="nav-link" href="https://us.informatiweb-pro.net/virtualization/microsoft/hyper-v">Hyper-V</a></li></ul></li></ul>	
+</nav>
+
+<div id="site-content" class="sidebar-enabled">
+	
+		<div id="gblock-top">
+		<div class="container-fluid">
+					</div>
+	</div>
+		
+    
+    
+<div class="site-content">
+	<div id="tuto-page" class="container-fluid" style="background: #222;" itemscope="" itemtype="https://schema.org/Article">
+		
+		<ul class="breadcrumb" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://us.informatiweb-pro.net/"><span itemprop="name">InformatiWeb Pro</span></a><meta itemprop="position" content="1"></li><li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://us.informatiweb-pro.net/virtualization"><span itemprop="name">Virtualization</span></a><meta itemprop="position" content="2"></li><li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://us.informatiweb-pro.net/virtualization/vmware"><span itemprop="name">VMware</span></a><meta itemprop="position" content="3"></li><li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://us.informatiweb-pro.net/virtualization/vmware/courses"><span itemprop="name">Courses</span></a><meta itemprop="position" content="4"></li><li class="breadcrumb-item" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://us.informatiweb-pro.net/virtualization/vmware/courses/learn-to-remotely-manage-vms-and-virtualize-hypervisors-with-vmware-workstation-pro.html"><span itemprop="name">Learn to remotely manage VMs and virtualize hypervisors with VMware Workstation Pro</span></a><meta itemprop="position" content="5"></li><li class="breadcrumb-item active" itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem"><span itemprop="name">Virtualize Windows 95</span><meta itemprop="position" content="6"></li></ul>		
+			
+			<div id="formation-bar">
+				<div id="forma-step-num"><a tabindex="0" role="button" data-toggle="popover" data-course-name="learn-to-remotely-manage-vms-and-virtualize-hypervisors-with-vmware-workstation-pro" data-step-num="9"><i class="fas fa-list"></i> 9 / 12</a></div>
+				<ul class="steps-btn">
+					<li><a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-15-14-virtualize-citrix-xenserver-6-5-0.html"><i class="fas fa-chevron-left"></i> Virtualize Citrix XenServer 6.5.0 (WS 14 to 16)</a></li>
+					<li><a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-10-import-windows-xp-mode-of-microsoft.html">Import Windows XP Mode of Microsoft <i class="fas fa-chevron-right"></i></a></li>
+				</ul>
+			</div>
+			
+				
+		<meta itemscope="" itemprop="mainEntityOfPage" content="/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html">
+		
+				
+				<h1 itemprop="headline">Install Windows 95 with VMware Workstation / Player</h1>
+				
+		<meta itemprop="url" content="/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html">
+		
+				
+		<ul class="list-inline">
+			<li itemprop="articleSection" content="Tutorials - Virtualization - VMware"><i class="far fa-folder-open"></i> VMware</li>
+						<li itemprop="datePublished" content="2013-03-25T20:23"><i class="far fa-clock"></i> 25 March 2013 at 20:23 UTC</li>
+			<li itemprop="author" itemscope="" itemtype="https://schema.org/Person"><i class="fas fa-user"></i> <img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/author-name-tuto.jpg" class="author-name-img" alt="InformatiWeb"><span itemprop="name" content="Lionel Eppe"></span></li>
+						<li class="tuto-pagination" itemprop="pagination" content="2-4"><i class="fas fa-file"></i> 2/4</li>
+					</ul>
+		
+				
+		<nav><a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95.html" class="btn btn-primary btn-sm">Previous page</a></nav>		
+		<div id="tuto-page-content" itemprop="description" content="Install Windows 95 in a VMware virtual machine by booting on a bootable floppy disk of Windows 95. With this tutorial, you will be able to install Windows 95 without any errors.">
+			<h2 class="article_step">3. Installing Windows 95<a name="install_win95"></a></h2>
+<p>First, we create a partition on the hard drive. To do this, use the fdisk program.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-24-29.jpg" alt="" width="720" height="400"></p>
+<p>Type 1 to create a DOS partition and press ENTER.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-24-34.jpg" alt="" width="720" height="400"></p>
+<p>Type 1 to create a primary partition</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-24-38.jpg" alt="" width="720" height="400"></p>
+<p>Then type Y to use all available space on the virtual hard disk.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-24-42.jpg" alt="" width="720" height="400"></p>
+<p>Once the partition is created, you must restart the virtual machine. To do this, click the VMware Workstation icon that represents the 3 keys (CTRL + ALT + DEL).</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-24-59.jpg" alt="" width="740" height="608"></p>
+<p>Because the keyboard is configured in QWERTY in this bootable floppy, here is the layout of the buttons on it :</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/qwerty.png" alt="" width="900" height="288"></p>
+<p>Then, format the C partition to create the file system (if you have the following later error message : INSTALL Windows requires 7340032 bytes available on your C: drive).<br>Then type "Y" to confirm formatting (formatting will erase all the data present on the partition)<br>Then enter a name for the partition if you want (11 characters max).</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-26-18.jpg" alt="" width="720" height="400"></p>
+<p>After formatting the partition made​​, we will now copy the files we will need during installation.<br>To do this, just type "sources" (without the quotes).</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-35-21.jpg" alt="" width="720" height="367"></p>
+<p>The program tells you that it will transfer the specified folders on the CD-ROM to the hard disk.<br>Press the "ENTER" button to start copying the files 2 times.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-35-31.jpg" alt="" width="720" height="400"></p>
+<p>Copying files is done. This may take a few minutes.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-35-36.jpg" alt="" width="720" height="400"></p>
+<p>Once the copy is complete, go to the "Windows 95 CD-ROM folder by typing this : cd win95<br>Then start the installation of Windows by typing : install and press Enter when prompted.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-27.jpg" alt="" width="720" height="400"></p>
+<p>The GUI is displayed.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-32.jpg" alt="" width="640" height="480"></p>
+<p>To start the installation, nothing special.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-37.jpg" alt="" width="513" height="332"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-43.jpg" alt="" width="584" height="392"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-48.jpg" alt="" width="584" height="392"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-39-52.jpg" alt="" width="584" height="392"></p>
+<p>Select "Default".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-40-04.jpg" alt="" width="584" height="392"></p>
+<p>Then enter your serial number Windows 95.</p>
+<p>Note : The format of it differs according to the type of license it is : OEM, Retail ...</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-40-09.jpg" alt="" width="584" height="392"></p>
+<p>Specify a name and an organization</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-41-01.jpg" alt="" width="584" height="392"></p>
+<p>Leave unchecked boxes. We install them manually later.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-41-07.jpg" alt="" width="584" height="392"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-41-11.jpg" alt="" width="584" height="392"></p>
+<p>Select "Install the most common components (recommended)".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-33.jpg" alt="" width="584" height="392"></p>
+<p>The wizard will then propose to create a boot disk.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-39.jpg" alt="" width="584" height="392"></p>
+<p>To avoid losing your floppy disk, right click on the disk icon in the interface of VMware and click on "Settings".</p>
+<p>Note : If you use VMware Player, click on the "&lt;&lt;" icon on the top right of the VMware window to bring up the icons : hard drive, CD drive, floppy drive, ...</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-48.jpg" alt="" width="696" height="719"></p>
+<p>Click "Floppy" on the left side and click on "Create" on the right side.<br>Note : This creates a new virtual floppy disk.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-50.jpg" alt="" width="707" height="587"></p>
+<p>Choose a name to save your new floppy disk.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-51.jpg" alt="" width="840" height="525"></p>
+<p>Make sure the boxes "Connected" and "Connect at power on" are checked and click OK.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-42-53.jpg" alt="" width="707" height="587"></p>
+<p>Click "OK" to create the boot disk Windows 95.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-43-57.jpg" alt="" width="640" height="480"></p>
+<p>Once the disk created you can remove the floppy drive if the wizard will warn you after.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-46-28.jpg" alt="" width="640" height="480"></p>
+<p>The installation is performed.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-46-41.jpg" alt="" width="640" height="480"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-47-10.jpg" alt="" width="640" height="480"></p>
+<p>If you still have not removed the disk, the wizard will ask you to remove it.<br>To do this, right click on the disk in the vmware interface and click on "Settings".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-47-20.jpg" alt="" width="696" height="721"></p>
+<p>Then uncheck the 2 boxes "Connected" and "Connect at power on" in the "Floppy" part.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-47-25.jpg" alt="" width="707" height="587"></p>
+<p>Then, the virtual machine will restart.<br>As you can see the keyboard language now happening in French (so AZERTY).</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-48-58.jpg" alt="" width="720" height="400"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-05.jpg" alt="" width="640" height="400"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-08.jpg" alt="" width="720" height="400"></p>
+<p>Windows will then configure your Plug and Play hardware.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-11.jpg" alt="" width="355" height="118"></p>
+<p>Specify as early tutorial, this message will appear during the installation. First click OK.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-25.jpg" alt="" width="397" height="118"></p>
+<p>Then another error message saying that the file 'buslogic.mpd' (in this case) was not found. In fact, this file is located on disk 6 of Win. 95 contained in the "win95_06.cab" file that we extracted and copied to the hard disk in order to provide it during installation.<br>Click on "Browse".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-42.jpg" alt="" width="404" height="221"></p>
+<p>Then go to the c drive (listed below) and go to the folder : c:\fdd\win95_06.<br>Then click "OK".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-49-56.jpg" alt="" width="407" height="242"></p>
+<p>Then click OK to continue the installation.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-50-03.jpg" alt="" width="404" height="221"></p>
+<p>The wizard will ask you to configure the computer name and the name of the workgroup in which it will be.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-50-13.jpg" alt="" width="377" height="118"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-50-46.jpg" alt="" width="366" height="460"></p>
+<p>Then returns the same error but for a different file.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-50-54.jpg" alt="" width="397" height="118"></p>
+<p>The following error appears : The file 'netapi.dll' on Windows 95 CD-ROM could not be found.<br>This file is located in the "precopy2.cab" file. So enter this path "C:\FDD\precopy2" checkbox and click OK.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-51-42.jpg" alt="" width="404" height="221"></p>
+<p>If you're wondering how we found where the files were well click the "Details" button. The name of the CAB file is located at the end of the "Destination File" line.<br>In this case : Destination File : C:\WINDOWS\SYTEM\<span class="gras">netapi.dll=precopy2.cab</span>.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-51-51.jpg" alt="" width="484" height="316"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-52-00.jpg" alt="" width="404" height="221"></p>
+<p>The following file "mapi32.dll" is on the disk 9.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-52-19.jpg" alt="" width="404" height="221"></p>
+<p>The rest of the files will be copied automatically without further intervention on your part.</p>
+<p>Then another window will appear on the Windows configuration panel which, time zone settings ...</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-52-35.jpg" alt="" width="316" height="215"></p>
+<p>Default settings are those on your computer.<br>Note : On a normal computer, these settings are saved in the BIOS of your motherboard.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-52-52.jpg" alt="" width="403" height="340"></p>
+<p>Skip step of adding the printer because we do not need.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-52-59.jpg" alt="" width="454" height="351"></p>
+<p>Once the installation is complete, click "OK" to restart the virtual machine.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-53-04.jpg" alt="" width="366" height="165"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-53-11.jpg" alt="" width="640" height="400"></p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-53-15.jpg" alt="" width="720" height="400"></p>
+<p>Enter a user name to create a new user and click "OK".</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-53-35.jpg" alt="" width="461" height="155"></p>
+<p>Enter a password if you wish, or leave blank.</p>
+<p><img class="img-fluid" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/Windows 95 - Tuto InformatiWeb-2013-03-21-20-53-43.jpg" alt="" width="377" height="165"></p>		</div>
+		
+		<nav><a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--3.html" class="btn btn-primary btn-sm">Next page</a></nav>		
+		<h2 class="share-this-tuto">Share this tutorial</h2>
+		
+				<div id="social-buttons">
+			<div class="fb-share-button" data-href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html" data-layout="button" data-size="large"><a target="_blank" rel="nofollow" href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html" class="fb-xfbml-parse-ignore">Partager</a></div>
+
+			<div class="tw-share"><a rel="nofollow" href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Install Windows 95 with VMware Workstation / Player" data-url="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html" data-via="informatiweb" data-show-count="false">Tweet</a></div>
+			
+			<div class="li-share"><script type="IN/Share" data-url="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-player-install-windows-95--2.html"></script></div>
+		</div>
+				
+		<div itemprop="publisher" itemscope="" itemtype="https://schema.org/Organization">
+			<div itemprop="logo" itemscope="" itemtype="https://schema.org/ImageObject">
+			  <meta itemprop="url" content="https://www.informatiweb-pro.net/images/site/logo.jpg">
+			  <meta itemprop="width" content="512">
+			  <meta itemprop="height" content="512">
+			</div>
+			<meta itemprop="name" content="InformatiWeb">
+	    </div>
+		
+		<div id="gblock-bottom">
+					</div>
+		
+				<h2 class="linked-tutos-title">To see also</h2>
+		
+		<ul class="tutos row">
+						<li class="col-lg-3 col-md-4 col-sm-6">
+				<a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-remotely-access-to-a-vm-over-vnc.html" title="VMware Workstation - Remotely access to a VM over VNC">
+					<div class="tuto-img">
+												<img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/vmware-workstation-remotely-access-to-a-vm-over-vnc.jpg" alt="VMware Workstation - Remotely access to a VM over VNC" class="img-fluid">
+											</div>
+					<div class="tuto-infos">
+						<p><i class="far fa-folder-open"></i> VMware <span class="tuto-date"><i class="far fa-clock"></i> 2/24/2016</span></p>
+						<h3>VMware Workstation - Remotely access to a VM over VNC</h3>
+					</div>
+				</a>
+			</li>
+						<li class="col-lg-3 col-md-4 col-sm-6">
+				<a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-10-import-windows-xp-mode-of-microsoft.html" title="VMware Workstation 10 - Import Windows XP Mode of Microsoft">
+					<div class="tuto-img">
+												<img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/vmware-workstation-10-import-windows-xp-mode-of-microsoft.jpg" alt="VMware Workstation 10 - Import Windows XP Mode of Microsoft" class="img-fluid">
+											</div>
+					<div class="tuto-infos">
+						<p><i class="far fa-folder-open"></i> VMware <span class="tuto-date"><i class="far fa-clock"></i> 1/31/2020</span></p>
+						<h3>VMware Workstation 10 - Import Windows XP Mode of Microsoft</h3>
+					</div>
+				</a>
+			</li>
+						<li class="col-lg-3 col-md-4 col-sm-6">
+				<a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-11-10-virtualize-windows-xp-to-make-it-fluid.html" title="VMware Workstation 11 / 10 - Virtualize Windows XP to make it fluid">
+					<div class="tuto-img">
+												<img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/vmware-workstation-11-10-virtualize-windows-xp-to-make-it-fluid.jpg" alt="VMware Workstation 11 / 10 - Virtualize Windows XP to make it fluid" class="img-fluid">
+											</div>
+					<div class="tuto-infos">
+						<p><i class="far fa-folder-open"></i> VMware <span class="tuto-date"><i class="far fa-clock"></i> 1/31/2020</span></p>
+						<h3>VMware Workstation 11 / 10 - Virtualize Windows XP to make it fluid</h3>
+					</div>
+				</a>
+			</li>
+						<li class="col-lg-3 col-md-4 col-sm-6">
+				<a href="https://us.informatiweb-pro.net/virtualization/vmware/vmware-workstation-12-11-10-virtualize-citrix-xenserver-6-5-0.html" title="VMware Workstation 12 / 11 / 10 - Virtualize Citrix XenServer 6.5.0">
+					<div class="tuto-img">
+												<img src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/vmware-workstation-12-11-10-virtualize-citrix-xenserver-6-5-0.jpg" alt="VMware Workstation 12 / 11 / 10 - Virtualize Citrix XenServer 6.5.0" class="img-fluid">
+											</div>
+					<div class="tuto-infos">
+						<p><i class="far fa-folder-open"></i> VMware <span class="tuto-date"><i class="far fa-clock"></i> 8/14/2020</span></p>
+						<h3>VMware Workstation 12 / 11 / 10 - Virtualize Citrix XenServer 6.5.0</h3>
+					</div>
+				</a>
+			</li>
+					</ul>
+				
+		<h2 id="comments" class="comments-title">Comments</h2><div class="comments-block"><p>No comment</p></div>
+				
+				
+		<div class="give-your-opinion-widget btn btn-info open-survey" data-survey-id="2" data-tuto-id="132"><i class="fas fa-comment-alt"></i> Share your opinion</div>
+
+	</div>
+</div>
+	
+	<div class="site-footer">
+		<div class="container-fluid">
+			
+						
+			<div class="row">
+				
+								
+								
+				<div class="col-lg-3 col-md-4 offset-lg-3 offset-md-2 col-sm-6 links-list links-list">
+					<p>Pinned content</p>
+					<ul>
+						<li><a href="https://us.informatiweb-pro.net/softwares/system-admin">Software (System admin)</a></li>
+						<li><a href="https://us.informatiweb-pro.net/softwares/linux">Linux softwares</a></li>
+						<li><a href="https://us.informatiweb-pro.net/our-programs">Our programs</a></li>
+						<li class="ext-link"><a class="no_replace" href="https://us.informatiweb.net/terms-and-conditions.html">Terms and conditions</a></li>
+						<li class="open-survey" data-survey-id="1">Share your opinion</li>
+					</ul>
+				</div>
+				
+				<div class="col-lg-3 col-md-4 col-sm-6 links-list">
+					<p>Contact</p>
+					<ul>
+						<li class="ext-link"><a class="no_replace" href="https://us.informatiweb.net/guest-book">Guest book</a></li>
+						<li class="ext-link"><a class="no_replace" href="https://us.informatiweb.net/support">Technical support</a></li>
+						<li class="ext-link"><a class="no_replace" href="https://us.informatiweb.net/contact.html">Contact</a></li>
+					</ul>
+				</div>
+				
+				<div class="col-lg-12 copyright">
+					<p>® InformatiWeb-Pro.net - InformatiWeb.net 2008-2022 - © Lionel Eppe - All rights reserved.</p>
+					<p>Total or partial reproduction of this site is prohibited and constitutes an infringement punishable by articles L.335-2 and following of the intellectual property Code.</p>
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+	
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/jquery-3.4.1.min.js.download"></script>
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/popper.min.js.download"></script><!-- Popper.js v1.14.7 -->
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/bootstrap.min.js.download"></script>
+
+
+<!-- jQuery UI -->
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/jquery-ui.min.js.download"></script>
+<link rel="stylesheet" type="text/css" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/jquery-ui.min.css">
+
+
+	
+<!-- Include *at least* the core style and default theme -->
+<link href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/shCore.css" rel="stylesheet" type="text/css">
+<link href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/shThemeRDark.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/shCore.js.download"></script>
+<script type="text/javascript" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/shAutoloader.js.download"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.autoloader(
+    ['bash','shell','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushBash.js'],
+    ['bat','batch','cmd','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushBat.js'],
+    ['css','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushCss.js'],
+    ['js','jscript','javascript','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js'],
+    ['php','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js'],
+    ['plain','text','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js'],
+    ['powershell','ps','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushPowerShell.js'],
+    ['sql','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushSql.js'],
+    ['vb','vbnet','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushVb.js'],
+    ['xml','xhtml','xslt','html','xhtml','//www.informatiweb.net/lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js']
+    );
+    SyntaxHighlighter.all();
+</script>
+
+<link rel="stylesheet" type="text/css" href="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/tooltipster.bundle.min.css">
+<script type="text/javascript" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/tooltipster.bundle.min.js.download"></script>
+
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/jquery.barrating.min.js.download"></script>
+
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/jquery.i18n.min.js.download"></script>
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/iw-us.js.download"></script>
+
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/js.cookie.js.download"></script>
+
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/common.js.download"></script>
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/functions.js.download"></script>
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/functions-iw-pro.js.download"></script>
+
+
+<!-- Twitter -->
+<script type="text/plain" async="" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/widgets.js.download" charset="utf-8"></script>
+
+<!-- Facebook -->
+<script type="text/plain" async="" defer="" crossorigin="anonymous" src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/sdk.js.download" nonce="0fKXty9e"></script>
+
+<!-- LinkedIn -->
+<script src="./Install Windows 95 with VMware Workstation _ Player - VMware - Tutorials - InformatiWeb Pro_files/in.js.download" type="text/plain">lang: en_US</script>
+
+
+
+
+<div id="scroll-top" style="display: none;"><i class="fas fa-angle-up"></i></div><ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul><div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div></body></html>

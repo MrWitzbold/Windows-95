@@ -1,0 +1,221 @@
+
+/* NEW IW PRO */
+
+/* NEW IW color - navbar du haut */
+body>nav.navbar{
+	background: #001442 !important;
+}
+.navbar-dark .navbar-nav .nav-link,
+a.navbar-brand,
+nav#sidebar form input,
+form#top-search>input{
+    color: #A4CCFF !important;
+}
+nav#sidebar form input,
+form#top-search>input{
+	box-shadow: 0 0 5px 5px #000d35 !important;
+	background: #112562 !important;
+}
+nav#sidebar:hover{
+    width: 330px;
+}
+nav#sidebar>ul>li>ul>li::before{
+    background-image: url(/images/tutoriels/products/sprite.png);
+}
+.navbar-dark .navbar-brand:hover,
+.navbar-dark .navbar-brand:focus,
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus{
+	color: #DDECFF !important;
+}
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus{
+	background-image: linear-gradient(#00216e, #001e64 40%, #001a55);
+}
+form#top-search>input::placeholder{
+	color: #A4CCFF !important;
+}
+form#top-search>input:hover {
+    border-color: #12488C !important;
+}
+
+/* NEW IW color - navbar du haut - icone membre + son popup */
+div#member-icon-menu{
+	border: 1px solid #001442 !important;
+}
+div#member-icon-menu.is-open{
+	border: 1px solid black !important;
+}
+div#member-icon-menu.is-open,
+div#member-icon-menu.is-open>div.member-popup,
+div#member-icon-menu.is-open>div.member-popup::before{
+	background-color: #001442 !important;
+}
+div#member-icon-menu.is-open>div.member-popup{
+	color: #A4CCFF !important;
+}
+div#member-icon-menu>div.member-avatar{
+	box-shadow: 0 0 3px 2px #001051 !important;
+}
+div#member-icon-menu>div.member-avatar>i.far{
+	background-color: #002f77 !important;
+}
+div#member-icon-menu>div.member-avatar>i.far:before{
+	color: #a4ccff !important;
+}
+
+/* NEW IW color - sidebar de gauche */
+nav#sidebar{
+	background: #001442 !important;
+}
+nav#sidebar>ul>li>a,
+nav#sidebar ul ul a{
+    color: #A4CCFF !important;
+}
+nav#sidebar>ul>li>ul>li:hover{
+	background-color: #00216e !important;
+}
+nav#sidebar ul ul a:hover{
+	color: #DDECFF !important;
+}
+/* NEW IW PRO */
+
+
+div.trad-icon>a>img{
+	box-shadow: 0 0 3px 2px #001051 !important;
+}
+nav#sidebar:hover ul ul a{
+	color: #A4CCFF !important;
+}
+
+/* Home page - header */
+div.site-header{
+	background-color:#00377b;
+    background-image: linear-gradient(315deg,#00377b 0%, #000f60 74%);
+}
+
+
+div.iw-pro-summary>ul.subjects-names{
+	list-style-type: none;
+	padding: 0;
+}
+div.iw-pro-summary>ul.subjects-names>li{
+	overflow: hidden;
+	margin: 3px 0;
+}
+
+/* Liste icônes des sujets en page d'acceuil */
+div.iw-pro-summary>ul.subjects-names>li:before{
+	float: left;
+	content:"";
+	width: 30px;
+	height: 30px;
+	margin-right: 8px;
+	
+	background-image: url(/images/site/diapos/summary-icons.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+}
+div.iw-pro-summary>ul.subjects-names>li:nth-child(2):before{
+	background-position: -30px 0;
+}
+div.iw-pro-summary>ul.subjects-names>li:nth-child(3):before{
+	background-position: -60px 0;
+}
+div.iw-pro-summary>ul.subjects-names>li:nth-child(4):before{
+	background-position: -90px 0;
+}
+div.iw-pro-summary>ul.subjects-names>li:nth-child(5):before{
+	background-position: 0 -30px;
+}
+div.iw-pro-summary>ul.subjects-names>li:nth-child(6):before{
+	background-position: -30px -30px;
+}
+
+/* Home page - header - Rotation des images */
+div.subjects-diaporama{
+	float: right;
+	width: 256px;
+	height: 256px;
+	text-align: right;
+	
+	position: relative;
+	top: 15px;
+	z-index: 10;
+}
+
+div.pc-logo>div.subjects-diaporama>img{
+	/* Superpose toutes les images */
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	/* Les images remplissent chaque fois l'écran */
+	width: 100%;
+	height: 100%;
+	
+	/* On évite les décalages */
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+/* Diaporama dans le PC */
+/* https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/ */
+div.subjects-diaporama img:nth-of-type(1) {
+	/*animation-name: fader;
+	animation-delay: 2s;
+	animation-duration: 1s;*/
+	z-index: 11;
+}
+div.subjects-diaporama img:nth-of-type(2) {
+	z-index: 10;
+}
+div.subjects-diaporama img:nth-of-type(n+3) {
+	display: none;
+}
+
+#subjects-diaporama>img{
+	display: none;
+	opacity: 1;
+}
+#subjects-diaporama>img:first-child{
+	display: inline;
+}
+
+/* RESPONSIVE - PC portable virtuel */
+@media (min-width: 711px) and (max-width: 830px) {
+	div.subjects-diaporama{
+		top: 43px;
+		right: 39px;
+		
+		width: 202px;
+		height: 132px;
+	}
+}
+
+/* Masque le PC portable sur mobile */
+@media (max-width: 710px) {
+	div.subjects-diaporama{
+		display: none;
+	}
+	div.iw-pro-summary>ul.subjects-names{
+		color: #aaa !important;
+	}
+}
+
+/* .. et surlignage avec légère animation
+de chaque compétence (en fonction de l'image affichée) */
+@media (min-width: 711px){
+	div.iw-pro-summary>ul.subjects-names>li:first-child{
+		color: #fff;
+	}
+}
+
+
+/* Boutons "site web" et DL quand un logiciel est lié à un produit pour tutos */
+div.site-header>div.container-fluid ul.logiciel-links{
+	margin-top: 10px !important;
+}
+
+

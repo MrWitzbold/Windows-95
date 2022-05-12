@@ -1,0 +1,72 @@
+
+(function () {
+	'use strict';
+	
+	$(document).ready(function() {
+		
+		
+		// --- Page d'accueil ---
+		if($('#subjects-names').length > 0){
+			// Surligne les compétences en fonction de
+			// l'image affichée à droite
+			$('#subjects-diaporama>img:nth-of-type(1)').css('display','inline');
+			$('#subjects-names>li:nth-of-type(1)').css('color','#fff');
+			
+			function show_next_competence(curr_comp_index){
+				  
+				  if(curr_comp_index == $('#subjects-names>li').length){
+					  // On est arrivé à la dernière compétence de la liste
+					  // donc, la compétence suivante est la 1ère de la liste
+				  	  var next_comp_index = 1;
+				  } else {
+					  var next_comp_index = curr_comp_index+1;
+				  }
+				  
+				  // Nom de la compétence : gris => blanc
+				  $('#subjects-names>li:nth-of-type('+curr_comp_index+')').animate({
+					color: '#aaa'
+				  }, 500, function() {
+					  // Animation complete.
+					  $('#subjects-names>li:nth-of-type('+next_comp_index+')').animate({
+						color: '#fff'
+					  }, 500, function() {
+						  // Animation complete.
+						  setTimeout(function(){
+							  // Laisse la compétence affichée pendant 2 secondes avant de passer à la suivante
+							  show_next_competence(next_comp_index);
+						  }, 2000);
+					  });
+				  });
+
+				  
+				  // Image de la compétence : opacité
+				  $('#subjects-diaporama>img:nth-of-type('+curr_comp_index+')').animate({
+					opacity: 0
+				  }, 500, function() {
+					  // Animation complete.
+					  $('#subjects-diaporama>img:nth-of-type('+curr_comp_index+')').css('display','none');
+					  
+					  $('#subjects-diaporama>img:nth-of-type('+next_comp_index+')')
+					  	  .css('opacity',0).css('display','inline')
+						  .animate({
+						opacity: 1
+					  }, 500, function() {
+						  // Animation complete.
+						  // On ne rappelle pas la fonction "show_next_competence" car
+						  // on l'a déjà fait pour les animations du nom de la compétence
+					  });
+				  });
+			}
+			
+			setTimeout(function(){
+				// Laisse la compétence affichée pendant 1,5 seconde avant de passer à la suivante
+				show_next_competence(1);
+			}, 2000);
+		}
+		// --- FIN - Surlignage des compétences ---
+		
+	
+		
+	}); // END - IF document ready
+	
+}());

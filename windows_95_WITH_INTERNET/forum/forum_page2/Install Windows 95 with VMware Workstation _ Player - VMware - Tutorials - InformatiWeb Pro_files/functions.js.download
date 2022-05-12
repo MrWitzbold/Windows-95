@@ -1,0 +1,4044 @@
+// JavaScript Document
+var fr_iw_domain = 'www.informatiweb.net';
+
+var current_lang = $.i18n._('current_lang');
+
+/*function get_lang(){
+	'use strict';
+	
+	if(window.location.hostname.substring(0, 2) === 'us'){
+		return 'us';
+	} else {
+		return 'fr';
+	}
+}
+
+current_lang = get_lang();*/
+
+(function () {
+	'use strict';
+	
+	function enable_ads_cookies(){
+		//alert('OK.');
+		$('script[type="text/plain"]').each(function(index){
+			// Restaure l'attribut "text/javascript" des script JS publicitaires
+			// de Google (emplacements fixes) et d'autres solutions tiers.
+			// Néanmoins, par défaut, le code javascript qui se trouve entre les
+			// balises "script" ou le fichier référencé avec l'attribut "src"
+			// se sera pas exécuté.
+			$(this).attr('type','text/javascript');
+			// Pour régler le problème, on exécute le code JS de la balise "script"
+			// actuelle dans la boucle.
+			// Source : https://stackoverflow.com/questions/30943831/enable-script-tags-with-different-type-changing-type-attribute-is-not-enought#answer-30946121
+			eval($(this).html());
+		});
+	}
+	
+	// Consentement cookies - Clic sur : Autoriser
+	$(document).on('click', 'button.fc-primary-button>p.fc-button-label', function(){
+		//alert('Autoriser (c)');
+		enable_ads_cookies();
+	});
+	
+	// Consentement cookies - Clic sur : Autoriser
+	$(document).on('click', 'button.fc-data-preferences-accept-all', function(){
+		//alert('Tout accepter');
+		enable_ads_cookies();
+	});
+	
+	// Consentement cookies - Clic sur : Autoriser
+	$(document).on('click', 'button.fc-confirm-choices', function(){
+		//alert('Confirmer les choix');
+		enable_ads_cookies();
+	});
+	
+	// Si le consentement cookies a déjà été accepté, on active tous les scripts JS.
+	if(Cookies.get('FCCDCF') != undefined || Cookies.get('FCNEC') != undefined){
+		enable_ads_cookies();
+	}
+	
+	$(document).ready(function() {
+
+		// Fonction exécutée au redimensionnement
+		function redimensionnement() {
+
+			if (window.matchMedia("(max-width: 1020px)").matches) {
+				// Affichage du menu mobile
+				$('body>nav>div#top-nav-bar').prependTo('body');
+				
+				if (window.matchMedia("(max-width: 600px)").matches){
+					//$('form#top-search').prependTo('div#top-nav-bar'); // OLD Jusqu'au 11/08/2019
+					$('nav.navbar>form#top-search').prependTo('div#top-nav-bar'); // NEW 12/08/2019 - OK aussi sur smartphone
+				} else {
+					//$('form#top-search').insertBefore('div#member-icon-menu'); // OLD Jusqu'au 11/08/2019
+					$('nav.navbar>form#top-search').insertBefore('div#member-icon-menu'); // NEW 12/08/2019 - OK aussi sur smartphone
+				}
+				
+			} else {
+				// Retour à l'affichage normal de la navbar du haut
+				// pour PC.
+				$('body>div#top-nav-bar').insertAfter('body>nav.navbar>a.navbar-brand');
+				$('form#top-search').insertBefore('div#member-icon-menu');
+			}
+			
+			
+			if (window.matchMedia("(max-width: 1240px)").matches) {
+				$('div.site-footer div.about-me')
+						.removeClass('col-lg-4')
+						.removeClass('offset-lg-1')
+						.addClass('col-lg-6');
+				
+				$('div.site-footer div.about-iw')
+						.removeClass('col-lg-4')
+						.removeClass('offset-lg-2')
+						.addClass('col-lg-6');
+				
+			} else {
+				$('div.site-footer div.about-me')
+						.addClass('col-lg-4')
+						.addClass('offset-lg-1')
+						.removeClass('col-lg-6');
+				
+				$('div.site-footer div.about-iw')
+						.addClass('col-lg-4')
+						.addClass('offset-lg-2')
+						.removeClass('col-lg-6');
+			}
+			
+			//fit_bs_modal_body($(".modal-dialog:last"), 15);
+
+		}
+
+		// On lie l'événement resize à la fonction
+		if (window.addEventListener) {
+			// NOT SUPPORTED on IE 8
+			window.addEventListener('resize', redimensionnement, false);
+		}
+		else {
+			window.attachEvent("onresize", redimensionnement);
+		}
+		
+		// Source : https://stackoverflow.com/questions/14242227/bootstrap-modal-body-max-height-100#answer-33256127
+		// Cette fonction doit être appelée au redimenssionement de la fenêtre (window)
+		// et requiert un "overflow-y: auto;" sur ".modal-body".
+		/*function fit_bs_modal_body (modal, padding) {
+			var windowHeight = $(window).height();
+			var modalHeight = modal.height();
+
+			var dif = windowHeight - (modalHeight + 2*padding);
+			var modalBody = $(".modal-body:first", modal);
+			modalBody.css("max-height", modalBody.height() + dif);
+		};*/
+
+		// Trigger :
+		redimensionnement();
+		
+		// Affichage / masquage du menu mobile
+		// (depuis la barre en haut du site)
+		$('div#mobile-menu-toggle').on('click', function(){
+			// On vérifie qu'on peut afficher le menu mobile
+			if (window.matchMedia("(max-width: 1020px)").matches){
+				
+				// Si on est bien en version mobile
+				if ($(this).hasClass('is-open')){
+					// et que le menu est ouvert, on le masque
+					$('body>div#top-nav-bar').css('left','-200px');
+					$(this).removeClass('is-open');
+					
+				} else {
+					// Sinon, on l'affiche
+					$('body>div#top-nav-bar').css('left',0);
+					$(this).addClass('is-open');
+				}
+				
+			}
+		});
+		
+		// Affichage / masquage du popup membre
+		// (depuis la barre en haut du site)
+		$('div.member-avatar').on('click', function(){
+			
+			// Si le popup est ouvert, on le masque
+			if ($('div#member-icon-menu').hasClass('is-open')){
+				$('div#member-icon-menu').find('member-popup').css('display','none');
+				$('div#member-icon-menu').removeClass('is-open');
+
+			} else {
+				// Sinon, on l'affiche
+				$('div#member-icon-menu').find('member-popup').css('display','block');
+				$('div#member-icon-menu').addClass('is-open');
+			}
+			
+		});
+		
+		
+		// --- Page d'accueil ---
+		if(document.getElementById("competences") !== null){
+			// Surligne les compétences en fonction de
+			// l'image affichée sur le PC portable à droite
+			var competences_list = document.getElementById("competences").getElementsByTagName("li");
+			var pc_diapos = document.getElementById("pc-diaporama");
+			//var fadeComplete = function() { pc_diapos.appendChild(arr[0]); };
+			var fadeComplete = function() {
+				pc_diapos.appendChild(arr[0]);
+			};
+			var fadeStart = function() {
+				// On met la compétence suivante (dont l'image est train d'apparaitre
+				// dans le PC portable virtuel) en blanc.
+				var curr_comp_index = pc_diapos.children[1].getAttribute('data-img-index');
+				//console.log('animation start : ' + pc_diapos.children[1].src + ' - ' + curr_comp_index);
+				competences_list[curr_comp_index].style.color = '#fff';
+
+				// Et on met la compétence précédente en gris.
+				var prev_comp_index = pc_diapos.children[0].getAttribute('data-img-index');
+				//console.log(' ==> prev : ' + pc_diapos.children[0].src + ' - ' + prev_comp_index);
+				competences_list[prev_comp_index].style.color = '#aaa';
+
+			};
+			var arr = pc_diapos.getElementsByTagName("img");
+			for(var i=0; i < arr.length; i++) {
+			    arr[i].addEventListener("animationstart", fadeStart, false);
+			    arr[i].addEventListener("animationend", fadeComplete, false);
+				arr[i].setAttribute('data-img-index',i);
+			}
+		}
+		// --- FIN - Surlignage des compétences ---
+		
+		// Gère le padding top de la sidebar à gauche avec la liste
+		// des sous-catégories de tutos favorites lors du scroll
+		$(window).scroll(function() {
+			
+			if(window.pageYOffset > 60){
+				$('nav#sidebar').css('padding-top','0');
+			} else {
+				$('nav#sidebar').css('padding-top','65px');
+			}
+			
+		});
+		
+		// FIX pour la gestion du sprite de la sidebar à gauche
+		// via les variables CSS qui ne sont pas supportées par IE11
+		if(GetIEVersion() === 11){
+			var css_for_sidebar = '';
+			$('nav#sidebar>ul>li>ul>li').each(function(index){
+				var css_custom_property = $(this).attr('data-css-var');
+				//console.log(css_custom_property);
+				
+				var regex_patt = new RegExp("--bg-pos: (\-[0-9]+)px ([0-9]+);");
+				var res = regex_patt.exec(css_custom_property);
+				//console.log(res);
+				
+				css_for_sidebar += 'nav#sidebar>ul>li>ul>li:nth-child('+index+'):before{background-position:'+res[1]+'px '+res[2]+';}';
+			});
+			$('head').append('<style>'+css_for_sidebar+'</style>');
+		}
+		
+		// Moteur de recherche du haut
+		init_ajax_search('form#top-search>input.recherche','right top','right bottom',{ajax_url: '/ajax/search'});
+		
+		// Page d'un tutoriel - Ajout/suppression du tuto des favoris de l'utilisateur
+		$('i#add-to-favorites-icon').on('click',function(){
+			
+			var is_favorite = Number($(this).attr('data-is-favorite'));
+			
+			var tuto_id = $(this).attr('data-tuto-id');
+			var formation_id = $(this).attr('data-formation-id');
+			
+			var set_to_favorite = 0;
+			
+			if(is_favorite === 1){
+				set_to_favorite = 0;
+			} else {
+				set_to_favorite = 1;
+			}
+			
+			var ajax_url = '';
+			var ajax_data = {
+				favorite: set_to_favorite,
+			};
+			
+			if(typeof tuto_id !== "undefined"){
+				// Tutoriel a mettre ou enlever des favoris
+				ajax_url = '/ajax/membre/tutoriels/add-to-favorites';
+				tuto_id = Number(tuto_id);
+				ajax_data.tuto_id = tuto_id;
+				
+			} else if(typeof formation_id !== "undefined"){
+				// Formation a mettre ou enlever des favoris
+				ajax_url = '/ajax/membre/formations/add-to-favorites';
+				formation_id = Number(formation_id);
+				ajax_data.formation_id = formation_id;
+				
+			} else {
+				alert($.i18n._('unknown_resource_type'));
+				return false;
+			}
+			
+			$.ajax({
+				// The URL for the request
+				url: ajax_url,
+				// The data to send (will be converted to a query string)
+				data: ajax_data,
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				if(data === true){
+					
+					if(set_to_favorite === 1){
+						$('i#add-to-favorites-icon').addClass('is-favorited').attr('data-is-favorite',1);
+						
+					} else {
+						$('i#add-to-favorites-icon').removeClass('is-favorited').attr('data-is-favorite',0);
+					}
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+		});
+		
+		// --- COMMENTAIRES - Poster un commentaire - Evenement submit du formulaire "form.comment-form"
+		$('form.comment-form').on('submit',function(event){
+			var current_form = $(this);
+			
+			post_comment(current_form);
+			
+			// Annule l'évenement submit par défaut
+			event.preventDefault();
+		});
+		
+		// --- COMMENTAIRES - Fonction permettant de poster un commentaire
+		// ou une réponse à un commentaire sur un tutoriel
+		function post_comment(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// ID du tuto se trouvant dans un attribut data-*
+			// de la balise "form".
+			var related_tuto_id = current_form.attr('data-tuto-id');
+			
+			// ID du commentaire parent se trouvant dans un
+			// attribut data-* de la balise "form".
+			// Pour l'éditeur affiché à la racine, cette valeur vaudra 0
+			var parent_comment_id = current_form.attr('data-parent-comment-id');
+			
+			// Commentaire de l'utilisateur en BBCODE
+			// récupérer depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var comment = CKEDITOR.instances[related_ckeditor_id].getData();
+			
+			$.ajax({
+				url: "/ajax/membre/tutoriels/post-comment",
+				data: {
+					comment: comment,
+					tuto_id: related_tuto_id,
+					parent_comment_id: parent_comment_id,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Commentaire ajouté
+					var comm_li = $('<li/>').attr('id','comment-'+data.comment_id);
+					var comm_block_div = $('<div/>').addClass('comment-block');
+					
+					// Bloc : User infos					
+					var comm_user_infos = $('<div class="user-infos">'+
+											'<a href="#">'+
+												'<img src="//'+fr_iw_domain+'/'+data.user_avatar_link+'" alt="'+data.user_name+'">'+
+											'</a>'+
+										  '</div>');
+					
+					var comm_div = $('<div/>').addClass('comment');
+					var comm_infos_ul = $('<ul class="infos"></ul>');
+					
+					var user_icon = 'fas fa-user';
+					
+					// -- Infos : Badge "webmaster" si besoin
+					var webmaster_roles = ['admin','moderator'];
+					var comm_infos_webmaster_badge = '';
+					if(webmaster_roles.indexOf(data.user_role) > -1){
+						// Si il s'agit de l'admin ou du modérateur,
+						// on affiche le badge "webmaster".
+						comm_infos_webmaster_badge = '<li><span class="badge badge-success">Webmaster</span></li>';
+						user_icon = 'fas fa-user-shield';
+					}
+					
+					// -- Infos : Auteur du commentaire
+					var comm_infos_user = '<li class="username" data-username="'+data.user_name+'"><a href="#"><i class="'+user_icon+'"></i> '+data.user_name+'</a></li>';
+					
+					// -- Infos : Réponse à @username
+					// (si il s'agit d'une réponse à un commentaire)
+					var comm_infos_reply_to = '';
+					if(data.parent_comment_id > 0){
+						var parent_username = $('li#comment-'+data.parent_comment_id+'>div>div.comment>ul.infos>li.username').attr('data-username');
+						comm_infos_reply_to = '<li class="reply-to"><a href="#comment-'+data.parent_comment_id+'" data-parent-comment-id="'+data.parent_comment_id+'">@'+parent_username+'</a></li>';
+					}
+					
+					// -- Infos : Affichage du statut du commentaire
+					// (si non validé automatiquement)
+					var comm_infos_status_badge = '';
+					if(typeof data.badge_infos !== "undefined"){
+						comm_infos_status_badge = '<li class="comm_status"><span class="badge badge-'+data.badge_infos.color+'" title="'+data.badge_infos.long_name+'"><i class="'+data.badge_infos.icon+'"></i> '+data.badge_infos.name+'</span></li>';
+					}
+					
+					// -- Infos : Date d'ajout du commentaire
+					var comm_infos_date = '<li class="date"><a href="#comment-'+data.comment_id+'" title="'+data.added_date_full+'">'+data.added_date_ago+'</a></li>';
+					
+					// -- Infos - Action icons
+					var comm_li_actions_icons = $('<li class="float-right"><ul class="actions-icons" data-comment-id="'+data.comment_id+'"></ul></li>');
+					
+					// -- Infos - Action icons - Modifier
+					var comm_li_actions_icons_edit = $('<li class="btn btn-primary btn-sm edit-comment"><i class="fas fa-pencil-alt"></i><span> '+$.i18n._('edit')+'</span></li>');
+					comm_li_actions_icons_edit.on('click',function(){
+						var li_el_edit_comment = $(this);
+						get_comment_src(li_el_edit_comment);
+					});
+					
+					// -- Infos - Action icons - Supprimer
+					var comm_li_actions_icons_del = $('<li class="btn btn-danger btn-sm delete-comment"><i class="fas fa-trash-alt"></i></li>');
+					comm_li_actions_icons_del.on('click',function(){
+						var comment_id = $(this).parent().attr('data-comment-id');
+						del_comment(comment_id);
+					});
+					
+					comm_li_actions_icons.find('ul.actions-icons').append(comm_li_actions_icons_edit);
+					comm_li_actions_icons.find('ul.actions-icons').append(comm_li_actions_icons_del);
+					
+					// On met les li dans le ul.infos
+					comm_infos_ul.append(comm_infos_user);
+					comm_infos_ul.append(comm_infos_reply_to);
+					comm_infos_ul.append(comm_infos_webmaster_badge);
+					comm_infos_ul.append(comm_infos_status_badge);
+					comm_infos_ul.append(comm_infos_date);
+					comm_infos_ul.append(comm_li_actions_icons);
+					// Le ul.infos dans div.comment
+					comm_div.append(comm_infos_ul);
+					
+					// Contenu du commentaire
+					var comm_content = $('<div/>').addClass('msg').append(data.comment_html);
+					// Le div.msg dans div.comment
+					comm_div.append(comm_content);
+					
+					// Bloc : Actions
+					var comm_actions = $('<ul/>').addClass('actions').attr('data-comment-id',data.comment_id);
+					
+					// -- Action : Répondre
+					var comm_actions_reply = $('<li class="reply"><i class="fas fa-reply"></i> '+$.i18n._('reply')+'</li>');
+					comm_actions_reply.on('click',function(){
+						comment_reply_event(this);
+					});
+					
+					// Le li "répondre" dans le ul.actions
+					comm_actions.append(comm_actions_reply);
+					// Le ul.actions dans div.comment
+					comm_div.append(comm_actions);
+					
+					// Le div.user-infos dans div.comment-block
+					comm_block_div.append(comm_user_infos);
+					// Le div.comment dans div.comment-block
+					comm_block_div.append(comm_div);
+					
+					// Et pour finir, le div.comment-block 
+					// dans le li global (#comment-*)
+					comm_li.append(comm_block_div);
+					
+					
+					// On vide le contenu du textarea (qui est caché)
+					current_form.find('textarea').val('');
+					// Ainsi que le contenu de l'éditeur CKEditor lié
+					// au textarea
+					CKEDITOR.instances[related_ckeditor_id].setData('');
+					
+					
+					if(data.parent_comment_id <= 0){
+						// Ajoute le commentaire à la fin de la liste
+						// des commentaires
+						if($('div.comments-block>ul.comments').length <= 0){
+							$('div.comments-block').prepend('<ul class="comments"></ul>');
+						}
+						
+						comm_li.appendTo('div.comments-block>ul.comments');
+						
+					} else {
+						// Réponse à un commentaire
+						if($('li#comment-'+data.parent_comment_id+'>div>div>ul.comments').length === 0){
+							$('<ul/>').addClass('comments').insertAfter('li#comment-'+data.parent_comment_id+'>div>div>ul.actions');
+						}
+						comm_li.appendTo('li#comment-'+data.parent_comment_id+'>div>div>ul.comments');
+						
+						// On supprime l'instance du CKEditor souhaitée
+						CKEDITOR.instances[related_ckeditor_id].destroy();
+						
+						// Puis, on supprime le bloc permettant de poster une réponse
+						current_form.parent().remove();
+					}
+					
+					
+				} else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				// On affiche un msg d'erreur
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- COMMENTAIRES - Actions de modération
+		$('ul.comments li.comm_status span.modo_action,ul.comments li.comment-modo-icon span.modo_action').on('click', function(){
+			
+			var modo_action = $(this).attr('data-action');
+			var comment_id = $(this).parent().attr('data-comment-id');
+			
+			$.ajax({
+			  type: 'POST',
+			  url: '/admin/ajax/moderate-comment',
+			  data: {
+				  modo_action: modo_action,
+				  comment_id: comment_id,
+			  },
+			  success: function(data){
+				  
+				  var msg_data = {
+					  color: '',
+					  badge_text: '',
+					  badge_icon: '',
+				  };
+				  
+				  if(data.status === 'ok'){
+					  
+					  if(modo_action === 'validate'){
+						  msg_data = {
+							  color: 'success',
+							  badge_text: $.i18n._('validated'),
+							  badge_icon: 'fas fa-check',
+						  };
+						  
+					  } else {
+						  // modo_action === 'set_as_spam'
+						  msg_data = {
+							  color: 'danger',
+							  badge_text: 'Spam',
+							  badge_icon: 'fas fa-user-astronaut',
+						  };
+					  }
+					  
+					  // edit comment infos
+					  if($('li#comment-'+comment_id+' li.comm_status span.badge').length > 0){
+						  // Le badge est déjà affiché, donc on le modifie
+						  $('li#comment-'+comment_id+' li.comm_status span.badge')
+								.removeClass('badge-warning')
+								.removeClass('badge-danger')
+								.addClass('badge-'+msg_data.color)
+								.text(' '+msg_data.badge_text)
+								.prepend('<i class="'+msg_data.badge_icon+'"></i>');
+					  } else {
+						  // Le badge de statut de commentaire est introuvable,
+						  // donc, on le crée, puis on l'ajout dans le DOM.
+						  var comm_status_li = $('<li/>').addClass('comm_status');
+						  var badge = $('<span/>')
+							.addClass('badge badge-'+msg_data.color+' tooltipster')
+							.text(' '+msg_data.badge_text); // l'espace au début est volontaire
+
+						  var badge_icon = $('<i/>').addClass(msg_data.badge_icon);
+
+						  badge.prepend(badge_icon);
+						  comm_status_li.append(badge);
+						  
+						  comm_status_li.insertBefore('li#comment-'+comment_id+' li.date');
+						  
+					  }
+					  
+					  
+				  } else {
+					  // data.status === 'error'
+					  // On affiche un message d'erreur en haut de page
+					  $('li#comment-'+comment_id+' div.error-msg').html('<p>'+data.message+'</p>');
+					  
+					  // Si c'est un commentaire introuvable (qui n'existe donc plus),
+					  // on retire le commentaire de la page
+					  if(typeof data.not_found !== "undefined" && data.not_found === true){
+						  
+						  // Enleve le commentaire automatiquement après 3 secondes.
+						  setTimeout(function(){
+							  $('li#comment-'+comment_id).remove();
+						  }, 3000);
+						  
+					  }
+					  
+				  }
+				  
+				  // Enleve le message d'alerte automatiquement après 3 secondes.
+				  setTimeout(function(){
+					  $('div.alert.alert-dismissible').remove();
+				  }, 3000);
+				  
+			  },
+			  error: function () {
+				  
+				  if(modo_action === 'validate'){
+					  $('li#comment-'+comment_id+' div.error-msg').html('<p>'+$.i18n._('error_occured_comm_validation')+'</p>');
+				  } else {
+					  $('li#comment-'+comment_id+' div.error-msg').html('<p>'+$.i18n._('error_occured_comm_spam')+'</p>');
+				  }
+				  
+			  },
+			  dataType:"json"
+			});
+			
+		});
+		
+		// --- COMMENTAIRES - Bouton Répondre - Evenement clic
+		$('ul.actions li.reply').on('click',function(){
+			comment_reply_event(this);
+		});
+		
+		// --- COMMENTAIRES - Fonction appelée depuis le bouton Répondre (au clic)
+		function comment_reply_event(reply_btn){
+			
+			var ul_actions = $(reply_btn).parent();
+			var parent_comm_id = ul_actions.attr('data-comment-id');
+			
+			// Bloc cloné avec ses évenements (withDataAndEvents = true)
+			var post_comment_block = $('div.comments-block>div.post-comment').clone(true);
+			
+			var cancel_btn = $('<span/>').addClass('btn btn-primary btn-sm cancel-btn').text($.i18n._('cancel'));
+			cancel_btn.on('click',function(/*event*/){
+				// Annuler la réponse à un commentaire
+				var post_comment_bloc = $(this).parent().parent().parent();
+
+				var cancel_confirm = confirm($.i18n._('are_you_sure'));
+				if (cancel_confirm) {
+					// L'utilisateur a validé la confirmation
+					
+					// On supprime l'instance du CKEditor souhaitée
+					CKEDITOR.instances['comment-reply-to-'+parent_comm_id].destroy();
+
+					// Puis, on supprime le bloc permettant de répondre au commentaire
+					post_comment_bloc.remove();
+
+					// On réaffiche les boutons d'action
+					$('li#comment-'+parent_comm_id+'>div>div.comment>ul.actions').css('display','');
+					$('li#comment-'+parent_comm_id+'>div>div.comment>ul.infos ul.actions-icons').css('display','');
+
+					// On réaffiche le commentaire d'origine
+					$('li#comment-'+parent_comm_id+'>div>div.comment>div.msg').css('display','');
+
+				}
+
+			});
+
+			
+			post_comment_block.find('form.comment-form').attr('data-parent-comment-id',parent_comm_id);
+			post_comment_block.find('form.comment-form>div#cke_comment-input').remove();
+			post_comment_block.find('form.comment-form>textarea')
+					.attr('id','comment-reply-to-'+parent_comm_id)
+					.attr('name','comment-reply-to-'+parent_comm_id)
+					.css('visibility','')
+					.css('display','')
+					.val('');
+			post_comment_block.find('[type="submit"]').text(' '+$.i18n._('reply')).prepend('<i class="fas fa-reply"></i>');
+			post_comment_block.find('div.btns').append(cancel_btn); // Ajoute le bouton "Annuler"
+			post_comment_block.insertAfter(ul_actions);
+			
+			// Transforme le textarea classique en un éditeur CKEditor
+			CKEDITOR.replace('comment-reply-to-'+parent_comm_id);
+			
+			// L'évenement submit est déjà défini, car le "div.comment"
+			// avait été cloner avec les évenements (param : true)
+			
+			ul_actions.css('display','none');
+			ul_actions.parent().find('ul.infos ul.actions-icons').css('display','none');
+			
+		}
+		
+		// -- Met en surbrillance le commentaire concerné par cette réponse --
+		$('body').on('mouseover', 'li.reply-to>a', function(){
+			var parent_comm_id = $(this).attr('data-parent-comment-id');
+			$('li#comment-'+parent_comm_id+'>div.comment-block')
+				.css('background-color','#292929')
+				.css('box-shadow','0 0 9px #333')
+				.css('border-color','#333');
+		});
+		
+		$('body').on('mouseleave', 'li.reply-to>a', function(){
+			var parent_comm_id = $(this).attr('data-parent-comment-id');
+			$('li#comment-'+parent_comm_id+'>div.comment-block')
+				.css('background-color','')
+				.css('box-shadow','')
+				.css('border-color','');
+		});
+		// -- Met en surbrillance le commentaire concerné par cette réponse --
+		
+		
+		// --- COMMENTAIRES - Modifier un commentaire
+		$('ul.actions-icons li.edit-comment').on('click',function(){
+			var li_el_edit_comment = $(this);
+			get_comment_src(li_el_edit_comment);
+		});
+		
+		// --- COMMENTAIRES - Récupérer le code source (BBCode) du commentaire
+		// à modifier
+		function get_comment_src(li_el_edit_comment){
+			
+			var ul_actions_icons = li_el_edit_comment.parent();
+			var comment_id = ul_actions_icons.attr('data-comment-id');
+			var ul_actions = $('li#comment-'+comment_id+'>div>div.comment>ul.actions');
+			
+			$.ajax({
+				url: "/ajax/membre/tutoriels/get-comment-src",
+				data: {
+					comment_id: comment_id,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				if(data.ok === true){
+					
+					var comment_to_edit = data.comment_src;
+
+					// Bloc cloné SANS ses évenements (withDataAndEvents = false)
+					var post_comment_block = $('div.comments-block>div.post-comment').clone(false);
+					
+					var cancel_btn = $('<span/>').addClass('btn btn-primary btn-sm cancel-btn').text($.i18n._('cancel'));
+					cancel_btn.on('click',function(/*event*/){
+						// Annuler l'édition du commentaire
+						var post_comment_bloc = $(this).parent().parent().parent();
+
+						var cancel_confirm = confirm($.i18n._('are_you_sure_to_edit_comm'));
+						if (cancel_confirm) {
+							// L'utilisateur a validé la confirmation,
+							// donc :
+							// - on retire l'éditeur CKEditor
+							// - on réaffiche les boutons
+							// ainsi, que le commentaire d'origine
+							
+							// On supprime l'instance du CKEditor souhaitée
+							CKEDITOR.instances['comment-edit-'+comment_id].destroy();
+
+							// Puis, on supprime le bloc permettant de modifier le commentaire
+							post_comment_bloc.remove();
+
+							// On réaffiche les boutons d'action
+							$('li#comment-'+comment_id+'>div>div.comment>ul.actions').css('display','');
+							$('li#comment-'+comment_id+'>div>div.comment>ul.infos ul.actions-icons').css('display','');
+							
+							// On réaffiche le commentaire d'origine
+							$('li#comment-'+comment_id+'>div>div.comment>div.msg').css('display','');
+							
+						}
+						
+						// Annule l'évenement par défaut du bouton (button)
+						//event.preventDefault();
+						
+					});
+
+					post_comment_block.find('form.comment-form').attr('data-comment-id',comment_id);
+					post_comment_block.find('form.comment-form>div#cke_comment-input').remove();
+					post_comment_block.find('form.comment-form>textarea')
+							.attr('id','comment-edit-'+comment_id)
+							.attr('name','comment-edit-'+comment_id)
+							.css('visibility','')
+							.css('display','')
+							.val(comment_to_edit);
+					post_comment_block.find('[type="submit"]').text(' '+$.i18n._('edit')).prepend('<i class="fas fa-pencil-alt"></i>');
+					post_comment_block.find('div.btns').append(cancel_btn); // Ajoute le bouton "Annuler"
+					post_comment_block.insertAfter(ul_actions);
+
+					// Transforme le textarea classique en un éditeur CKEditor
+					CKEDITOR.replace('comment-edit-'+comment_id);
+
+					// L'évenement submit n'est PAS défini, car le "div.comment"
+					// avait été cloné SANS les évenements (param : false)
+
+					// On ajoute l'évenement submit personnalisé sur le formulaire
+					post_comment_block.find('form.comment-form').on('submit',function(event){
+						var current_form = $(this);
+
+						edit_comment(current_form);
+
+						// Annule l'évenement submit par défaut
+						event.preventDefault();
+					});
+
+					// On masque le "ul.actions" et "ul.actions-icons" du commentaire
+					ul_actions.css('display','none');
+					ul_actions_icons.css('display','none');
+					$('li#comment-'+comment_id+'>div>div.comment>div.msg').css('display','none');
+					
+				}  else {
+					// Une erreur s'est produite
+					$('li#comment-'+comment_id+'>div>div.comment>div.msg').prepend('<div class="alert alert-dismissible alert-danger">'+
+																					  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																					  data.msg+
+																				  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 8 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 8000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- COMMENTAIRES - Fonction permettant de modifier un commentaire
+		// ou une réponse à un commentaire sur un tutoriel
+		function edit_comment(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// ID du commentaire se trouvant dans un
+			// attribut data-* de la balise "form".
+			var comment_id = current_form.attr('data-comment-id');
+			
+			// Commentaire de l'utilisateur en BBCODE
+			// récupéré depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var comment = CKEDITOR.instances[related_ckeditor_id].getData();
+			
+			$.ajax({
+				url: "/ajax/membre/tutoriels/edit-comment",
+				data: {
+					comment_id: comment_id,
+					comment: comment,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Commentaire modifié
+					$('li#comment-'+comment_id+'>div.comment-block>div.comment>div.msg')
+						.html(data.comment_html)
+						.css('display','')
+						.prepend('<div class="alert alert-dismissible alert-success">'+
+									  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+									  data.msg+
+								'</div>');
+					
+					// On supprime l'instance du CKEditor souhaitée
+					CKEDITOR.instances[related_ckeditor_id].destroy();
+
+					// Puis, on supprime le bloc permettant de modifier le commentaire
+					current_form.parent().remove();
+					
+					// On réaffiche les boutons d'action
+					$('li#comment-'+comment_id+'>div>div.comment>ul.actions').css('display','');
+					$('li#comment-'+comment_id+'>div>div.comment>ul.infos ul.actions-icons').css('display','');
+					
+				}  else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+				}
+				
+				// Enleve le message d'erreur automatiquement après 4 secondes.
+				setTimeout(function(){
+					$('div.alert.alert-dismissible').remove();
+				}, 4000);
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				// On affiche un msg d'erreur
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+				
+			});
+		}
+		
+		// --- COMMENTAIRES - Supprimer un commentaire
+		$('ul.actions-icons li.delete-comment').on('click',function(){
+			var comment_id = $(this).parent().attr('data-comment-id');
+			del_comment(comment_id);
+		});
+		
+		// --- COMMENTAIRES - Suppression d'un commentaire
+		function del_comment(comment_id){
+			
+			var direct_replies_count = $('li.reply-to[data-parent-comment-id="'+comment_id+'"]').length;
+			
+			var confirm_msg = $.i18n._('are_you_sure_to_del_comm');
+			
+			if(direct_replies_count > 0){
+				confirm_msg = $.i18n._('are_you_sure_to_del_comm_and_answers');
+			}
+			
+			var cancel_confirm = confirm(confirm_msg);
+			if (cancel_confirm) {
+				// L'utilisateur a validé la confirmation
+
+				$.ajax({
+					url: "/ajax/membre/tutoriels/del-comment",
+					data: {
+						comment_id: comment_id,
+					},
+					type: "POST",
+					// The type of data we expect back
+					dataType : "json",
+				})
+				.done(function(data) {
+
+					var msg_color = '';
+					if(data.ok === true){
+						// Commentaire supprimé
+						msg_color = 'success';
+
+					} else {
+						// Commentaire NON supprimé
+						msg_color = 'danger';
+					}
+
+					// Affiche un message de succès ou d'erreur à la place du commentaire
+					$('<div class="alert alert-dismissible alert-'+msg_color+'">'+
+						  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+						  data.msg+
+					  '</div>').insertBefore('li#comment-'+comment_id);
+
+					// Enleve le commentaire de la liste
+					//$('li#comment-'+comment_id).remove();
+					
+					// Enlève le commentaires et ses réponses, sous-réponses, ...
+					var remove_comment_children = function(comm_id){
+						
+						// Cherche et supprime les enfants en cascade
+						// Important : la façon dont est écrit le code
+						// ci-dessous permet de chercher tous les enfants
+						// et de les supprimer uniquement à la fin de toutes
+						// les recherches en cascades
+						$('li.reply-to[data-parent-comment-id="'+comm_id+'"]').each(function(index,el){
+							var curr_comm_id = $(el).find('div>div.comment>ul.actions').attr('data-comment-id');
+							// Cherche puis supprime les enfants (si applicable)
+							// de chaque commentaire enfant
+							remove_comment_children(curr_comm_id);
+							// Supprime le commentaire
+							$('li#comment-'+curr_comm_id).remove();
+						});
+						
+						// Supprime le commentaire supprimé à l'origine
+						$('li#comment-'+comm_id).remove();
+						
+					};
+					
+					remove_comment_children(comment_id);
+					//console.log('begin comm ID : '+comment_id);
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+
+				})
+				.fail(function(jqXHR, textStatus, errorThrown){
+					alert($.i18n._('error_occurred')+' : '+errorThrown);
+				});
+			}
+			
+		}
+		
+		
+		$('span#show-tuto-comments').on('click',function(){
+			var span_el = $(this);
+			var req_sent = Number(span_el.attr('data-req-sent'));
+			var tuto_id = span_el.attr('data-tuto-id');
+			
+			if(req_sent === 0){
+				span_el.attr('data-req-sent',1);
+				
+				// On récupère la liste (au format HTML) des commentaires
+				// pour ce tutoriel dans la langue souhaitée
+				$.ajax({
+					url: "/ajax/tutoriels/get-comments-html",
+					data: {
+						tuto_id: tuto_id,
+					},
+					type: "POST",
+					// The type of data we expect back
+					dataType : "html", // Format HTML exceptionnellement
+				})
+				.done(function(data) {
+					
+					// Si il y a des commentaires à afficher
+					if(data !== ''){
+						// On enlève le lien cliquable
+						// qui permet de les afficher
+						$('div.comments-block>p').remove();
+						// Et on affiche la liste des commentaires
+						// récupérée au format html
+						$('div.comments-block').append(data);
+					}
+					
+				})
+				.fail(function(jqXHR, textStatus, errorThrown){
+					alert($.i18n._('error_occurred')+' : '+errorThrown);
+				});
+				
+			} else {
+				// Evite de chager 2 fois la liste des commentaires
+				return false;
+			}
+			
+		});
+		
+		
+		// --- Livre d'or - Poster un message - Evenement submit du formulaire "form.msg-form"
+		$('div.guest-book form.msg-form').on('submit',function(event){
+			var current_form = $(this);
+			
+			// Annule l'évenement submit par défaut
+			event.preventDefault();
+			
+			post_book_msg(current_form);
+		});
+		
+		// --- Livre d'or - Poster un message
+		function post_book_msg(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// Message de l'utilisateur en BBCODE
+			// récupéré depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var msg = CKEDITOR.instances[related_ckeditor_id].getData();
+			var auteur = current_form.find('input#auteur').val();
+			var auteur_email = current_form.find('input#auteur-email').val();
+			
+			$.ajax({
+				url: "/ajax/livre-or/post-msg",
+				data: {
+					msg: msg,
+					auteur: auteur,
+					auteur_email: auteur_email,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Message ajouté
+					var comm_li = $('<li/>').attr('id','msg-'+data.msg_id);
+					var comm_block_div = $('<div/>').addClass('comment-block');
+					
+					var comm_div = $('<div/>').addClass('comment');
+					var comm_infos_ul = $('<ul class="infos"></ul>');
+					
+					// -- Infos : Auteur du commentaire
+					var comm_infos_user = '<li class="author"><i class="fas fa-user"></i> '+data.author+'</li>';
+					
+					// -- Infos : Affichage du statut du commentaire
+					// (si non validé automatiquement)
+					var comm_infos_status_badge = '';
+					if(data.published != 1){
+						comm_infos_status_badge = '<li><span class="badge badge-warning">'+$.i18n._('awaiting_validation')+'</span></li>';
+					}
+					
+					// -- Infos : Date d'ajout du commentaire
+					var comm_infos_date = '<li class="date"><a href="#msg-'+data.msg_id+'" title="'+data.added_date_full+'">'+data.added_date_ago+'</a></li>';
+					
+					// -- Infos - Action icons
+					var comm_li_actions_icons = $('<li class="float-right"><ul class="actions-icons" data-msg-id="'+data.msg_id+'"></ul></li>');
+					
+					// -- Infos - Action icons - Modifier
+					var comm_li_actions_icons_edit = $('<li class="btn btn-primary btn-sm edit-book-msg"><i class="fas fa-pencil-alt"></i><span> '+$.i18n._('edit')+'</span></li>');
+					comm_li_actions_icons_edit.on('click',function(){
+						var li_el_edit_msg = $(this);
+						get_book_msg_src(li_el_edit_msg);
+					});
+					
+					// -- Infos - Action icons - Supprimer
+					var comm_li_actions_icons_del = $('<li class="btn btn-danger btn-sm delete-book-msg"><i class="fas fa-trash-alt"></i></li>');
+					comm_li_actions_icons_del.on('click',function(){
+						var msg_id = $(this).parent().attr('data-msg-id');
+						del_book_msg(msg_id);
+					});
+					
+					comm_li_actions_icons.find('ul.actions-icons').append(comm_li_actions_icons_edit);
+					comm_li_actions_icons.find('ul.actions-icons').append(comm_li_actions_icons_del);
+					
+					// On met les li dans le ul.infos
+					comm_infos_ul.append(comm_infos_user);
+					comm_infos_ul.append(comm_infos_status_badge);
+					comm_infos_ul.append(comm_infos_date);
+					comm_infos_ul.append(comm_li_actions_icons);
+					// Le ul.infos dans div.comment
+					comm_div.append(comm_infos_ul);
+					
+					// Contenu du commentaire
+					var comm_content = $('<div/>').addClass('msg').append(data.msg_html);
+					// Le div.msg dans div.comment
+					comm_div.append(comm_content);
+					
+					
+					// Le div.comment dans div.comment-block
+					comm_block_div.append(comm_div);
+					
+					// Et pour finir, le div.comment-block 
+					// dans le li global (#comment-*)
+					comm_li.append(comm_block_div);
+					
+					// On vide les champs "auteur" et "email" qui sont cachés
+					current_form.find('input#auteur').val('');
+					current_form.find('input#auteur-email').val('');
+					
+					// On vide le contenu du textarea (qui est caché)
+					current_form.find('textarea').val('');
+					// Ainsi que le contenu de l'éditeur CKEditor lié
+					// au textarea
+					CKEDITOR.instances[related_ckeditor_id].setData('');
+					
+					
+					// Ajoute le commentaire au début de la liste
+					// des messages
+					if($('div.comments-block>ul.comments').length <= 0){
+						$('div.comments-block').prepend('<ul class="comments"></ul>');
+					}
+
+					comm_li.prependTo('div.comments-block>ul.comments');
+					
+					
+				} else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				// On affiche un msg d'erreur
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- Livre d'or - Modifier un message
+		$('ul.actions-icons li.edit-book-msg').on('click',function(){
+			var li_el_edit_msg = $(this);
+			get_book_msg_src(li_el_edit_msg);
+		});
+		
+		// --- Livre d'or - Récupérer le code source (BBCode) du message
+		// à modifier
+		function get_book_msg_src(li_el_edit_msg){
+			
+			var ul_actions_icons = li_el_edit_msg.parent();
+			var book_msg_id = ul_actions_icons.attr('data-msg-id');
+			var div_comment = $('li#msg-'+book_msg_id+'>div>div.comment');
+			
+			$.ajax({
+				url: "/ajax/livre-or/get-msg-src",
+				data: {
+					msg_id: book_msg_id,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				if(data.ok === true){
+					
+					var book_msg_to_edit = data.msg_src;
+
+					// Bloc cloné SANS ses évenements (withDataAndEvents = false)
+					var post_msg_block = $('div.comments-block>div.post-msg').clone(false);
+					
+					var cancel_btn = $('<span/>').addClass('btn btn-primary btn-sm cancel-btn').text($.i18n._('cancel'));
+					cancel_btn.on('click',function(/*event*/){
+						// Annuler l'édition du message
+						var post_msg_bloc = $(this).parent().parent().parent();
+
+						var cancel_confirm = confirm($.i18n._('are_you_sure_to_cancel_msg_edit'));
+						if (cancel_confirm) {
+							// L'utilisateur a validé la confirmation,
+							// donc :
+							// - on retire l'éditeur CKEditor
+							// - on réaffiche les boutons
+							// ainsi, que le message d'origine
+							
+							// On supprime l'instance du CKEditor souhaitée
+							CKEDITOR.instances['msg-edit-'+book_msg_id].destroy();
+
+							// Puis, on supprime le bloc permettant de modifier le message
+							post_msg_block.remove();
+
+							// On réaffiche les boutons d'action
+							//$('li#msg-'+book_msg_id+'>div>div.comment>ul.actions').css('display','');
+							$('li#msg-'+book_msg_id+'>div>div.comment>ul.infos ul.actions-icons').css('display','');
+							
+							// On réaffiche le message d'origine
+							$('li#msg-'+book_msg_id+'>div>div.comment>div.msg').css('display','');
+							
+						}
+						
+						// Annule l'évenement par défaut du bouton (button)
+						//event.preventDefault();
+						
+					});
+
+					post_msg_block.find('form.msg-form').attr('data-msg-id',book_msg_id);
+					post_msg_block.find('form.msg-form>div#cke_comment-input').remove();
+					
+					if(typeof data.author !== "undefined"){
+						// Si c'est un message posté par un visiteur, on l'autorise
+						// à modifier son nom et son email.
+						post_msg_block.find('form.msg-form input#auteur').val(data.author);
+						post_msg_block.find('form.msg-form input#auteur-email').val(data.email);
+					} else {
+						// Sinon, l'auteur est un membre, donc ces infos ne peuvent pas
+						// être modifiées étant donné que ce sont celles du compte
+						post_msg_block.find('form.msg-form div.author-field').css('display','none');
+						post_msg_block.find('form.msg-form div.author-mail-field').css('display','none');
+					}
+					
+					post_msg_block.find('form.msg-form>textarea')
+							.attr('id','msg-edit-'+book_msg_id)
+							.attr('name','msg-edit-'+book_msg_id)
+							.css('visibility','')
+							.css('display','')
+							.val(book_msg_to_edit);
+					post_msg_block.find('[type="submit"]').text(' '+$.i18n._('edit')).prepend('<i class="fas fa-pencil-alt"></i>');
+					post_msg_block.find('div.btns').append(cancel_btn); // Ajoute le bouton "Annuler"
+					//post_msg_block.insertAfter(ul_actions);
+					post_msg_block.appendTo(div_comment);
+					
+					// Transforme le textarea classique en un éditeur CKEditor
+					CKEDITOR.replace('msg-edit-'+book_msg_id);
+					
+
+					// L'évenement submit n'est PAS défini, car le "div.comment"
+					// avait été cloné SANS les évenements (param : false)
+
+					// On ajoute l'évenement submit personnalisé sur le formulaire
+					post_msg_block.find('form.msg-form').on('submit',function(event){
+						var current_form = $(this);
+
+						edit_book_msg(current_form);
+
+						// Annule l'évenement submit par défaut
+						event.preventDefault();
+					});
+
+					// On masque le "ul.actions" et "ul.actions-icons" du message
+					//ul_actions.css('display','none');
+					ul_actions_icons.css('display','none');
+					$('li#msg-'+book_msg_id+'>div>div.comment>div.msg').css('display','none');
+					
+				}  else {
+					// Une erreur s'est produite
+					$('li#msg-'+book_msg_id+'>div>div.comment>div.msg').prepend('<div class="alert alert-dismissible alert-danger">'+
+																					  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																					  data.msg+
+																				  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 8 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 8000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- Livre d'or - Fonction permettant de modifier un message
+		function edit_book_msg(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// ID du message se trouvant dans un
+			// attribut data-* de la balise "form".
+			var book_msg_id = current_form.attr('data-msg-id');
+			
+			// Message de l'utilisateur en BBCODE
+			// récupéré depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var book_msg = CKEDITOR.instances[related_ckeditor_id].getData();
+			
+			var ajax_req_params = {
+					msg_id: book_msg_id,
+					msg: book_msg,
+			};
+			
+			if(current_form.find('input#auteur').length > 0 && current_form.find('input#auteur-email').length > 0){
+				ajax_req_params.author = current_form.find('input#auteur').val();
+				ajax_req_params.email = current_form.find('input#auteur-email').val();
+			}
+			
+			$.ajax({
+				url: "/ajax/livre-or/edit-msg",
+				data: ajax_req_params,
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Message modifié
+					$('li#msg-'+book_msg_id+'>div.comment-block>div.comment>div.msg')
+						.html(data.msg_html)
+						.css('display','')
+						.prepend('<div class="alert alert-dismissible alert-success">'+
+									  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+									  data.msg+
+								'</div>');
+					
+					if(typeof data.author !== "undefined"){
+						var user_icon = $('<i/>').addClass('fas').addClass('fa-user');
+						
+						$('li#msg-'+book_msg_id+' li.author')
+							.text(' '+data.author)
+							.prepend(user_icon);
+					}
+					
+					// On supprime l'instance du CKEditor souhaitée
+					CKEDITOR.instances[related_ckeditor_id].destroy();
+
+					// Puis, on supprime le bloc permettant de modifier le commentaire
+					current_form.parent().remove();
+					
+					// On réaffiche les boutons d'action
+					//$('li#comment-'+book_msg_id+'>div>div.comment>ul.actions').css('display','');
+					$('li#msg-'+book_msg_id+'>div>div.comment>ul.infos ul.actions-icons').css('display','');
+					
+				}  else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+				}
+				
+				// Enleve le message d'erreur automatiquement après 4 secondes.
+				setTimeout(function(){
+					$('div.alert.alert-dismissible').remove();
+				}, 4000);
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				// On affiche un msg d'erreur
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+				
+			});
+		}
+		
+		// --- Livre d'or - Supprimer un message
+		$('ul.actions-icons li.delete-book-msg').on('click',function(){
+			var msg_id = $(this).parent().attr('data-msg-id');
+			del_book_msg(msg_id);
+		});
+		
+		// --- Livre d'or - Suppression d'un message
+		function del_book_msg(book_msg_id){
+			
+			var confirm_msg = $.i18n._('are_you_sure_to_del_msg');
+			
+			var cancel_confirm = confirm(confirm_msg);
+			if (cancel_confirm) {
+				// L'utilisateur a validé la confirmation
+
+				$.ajax({
+					url: "/ajax/livre-or/del-msg",
+					data: {
+						msg_id: book_msg_id,
+					},
+					type: "POST",
+					// The type of data we expect back
+					dataType : "json",
+				})
+				.done(function(data) {
+
+					var msg_color = '';
+					if(data.ok === true){
+						// Message supprimé
+						msg_color = 'success';
+
+					} else {
+						// Message NON supprimé
+						msg_color = 'danger';
+					}
+
+					// Affiche un message de succès ou d'erreur à la place du message
+					$('<div class="alert alert-dismissible alert-'+msg_color+'">'+
+						  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+						  data.msg+
+					  '</div>').insertBefore('li#msg-'+book_msg_id);
+
+					// Supprime le message
+					$('li#msg-'+book_msg_id).remove();
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+
+				})
+				.fail(function(jqXHR, textStatus, errorThrown){
+					alert($.i18n._('error_occurred')+' : '+errorThrown);
+				});
+			}
+			
+		}
+		
+		// --- Livre d'or - Valider un message
+		$('li.book-msg-modo-icon span.modo_action').on('click',function(){
+			var msg_id = $(this).parent().attr('data-msg-id');
+			var modo_action = $(this).attr('data-action'); // validate OU reject
+			
+			validate_book_msg(msg_id,modo_action);
+		});
+		
+		function validate_book_msg(msg_id,modo_action){
+			
+			var msg_li = $('li#msg-'+msg_id);
+			
+			$.ajax({
+				url: "/admin/ajax/livre-or/moderate-msg",
+				data: {
+					msg_id: msg_id,
+					modo_action: modo_action,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// Affiche un message de succès à la place du message
+				$('<div class="alert alert-dismissible alert-success">'+
+					  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+					  data.message+
+				  '</div>').insertBefore(msg_li);
+				
+				if(data.status === 'ok'){
+					if(modo_action == 'validate'){
+						// Si le message a été validé, on enlève 
+						// le badge "En attente de validation".
+						msg_li.find('li.msg-status').remove();
+					} else {
+						// Sinon, on supprime le message de la liste
+						msg_li.remove();
+					}
+				}
+				
+				
+				// Enleve le message d'erreur automatiquement après 4 secondes.
+				setTimeout(function(){
+					$('div.alert.alert-dismissible').remove();
+				}, 4000);
+
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- Support technique - Poster une réponse - Evenement submit du formulaire "form.msg-form"
+		/*$('form.msg-form').on('submit',function(event){
+			var current_form = $(this);
+			
+			post_request_msg(current_form);
+			
+			// Annule l'évenement submit par défaut
+			event.preventDefault();
+		});
+		
+		// --- Support technique - Fonction permettant de poster une réponse
+		// à une demande de support
+		function post_request_msg(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// ID du tuto se trouvant dans un attribut data-*
+			// de la balise "form".
+			var related_request_id = current_form.attr('data-request-id');
+			
+			// Commentaire de l'utilisateur en BBCODE
+			// récupéré depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var message = CKEDITOR.instances[related_ckeditor_id].getData();
+			
+			$.ajax({
+				url: "/ajax/membre/support/demandes/post-msg",
+				data: {
+					message: message,
+					request_id: related_request_id,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Message ajouté
+					var msg_li = $('<li/>').attr('id','msg-'+data.msg_id);
+					var msg_block_div = $('<div/>').addClass('msg-block');
+					
+					// Bloc : User infos					
+					var msg_user_infos = $('<div class="user-infos">'+
+											'<a href="#">'+
+												'<img src="'+data.user_avatar_link+'" alt="'+data.user_name+'">'+
+											'</a>'+
+										  '</div>');
+					
+					var msg_div = $('<div/>').addClass('message');
+					var msg_infos_ul = $('<ul class="infos"></ul>');
+					
+					var user_icon = 'fas fa-user';
+					
+					// -- Infos : Badge "webmaster" si besoin
+					var webmaster_roles = ['admin','moderator'];
+					var msg_infos_webmaster_badge = '';
+					if(webmaster_roles.indexOf(data.user_role) > -1){
+						// Si il s'agit de l'admin ou du modérateur,
+						// on affiche le badge "webmaster".
+						msg_infos_webmaster_badge = '<li><span class="badge badge-success">Webmaster</span></li>';
+						user_icon = 'fas fa-user-shield';
+					}
+					
+					// -- Infos : Auteur du message
+					var msg_infos_user = '<li class="username" data-username="'+data.user_name+'"><a href="#"><i class="'+user_icon+'"></i> '+data.user_name+'</a></li>';
+					
+					// -- Infos : Date d'ajout du message
+					var msg_infos_date = '<li class="date"><a href="#msg-'+data.msg_id+'" title="'+data.added_date_full+'">'+data.added_date_ago+'</a></li>';
+					
+					// -- Infos - Action icons
+					var msg_li_actions_icons = $('<li class="float-right"><ul class="actions-icons" data-msg-id="'+data.msg_id+'"></ul></li>');
+					
+					// -- Infos - Action icons - Modifier
+					var msg_li_actions_icons_edit = $('<li class="btn btn-primary btn-sm edit-msg"><i class="fas fa-pencil-alt"></i><span> Modifier</span></li>');
+					msg_li_actions_icons_edit.on('click',function(){
+						var li_el_edit_msg = $(this);
+						get_request_msg_src(li_el_edit_msg);
+					});
+					
+					// -- Infos - Action icons - Supprimer
+					var msg_li_actions_icons_del = $('<li class="btn btn-danger btn-sm delete-msg"><i class="fas fa-trash-alt"></i></li>');
+					msg_li_actions_icons_del.on('click',function(){
+						var msg_id = $(this).parent().attr('data-msg-id');
+						del_request_msg(msg_id);
+					});
+					
+					msg_li_actions_icons.find('ul.actions-icons').append(msg_li_actions_icons_edit);
+					msg_li_actions_icons.find('ul.actions-icons').append(msg_li_actions_icons_del);
+					
+					// On met les li dans le ul.infos
+					msg_infos_ul.append(msg_infos_user);
+					msg_infos_ul.append(msg_infos_webmaster_badge);
+					msg_infos_ul.append(msg_infos_date);
+					msg_infos_ul.append(msg_li_actions_icons);
+					// Le ul.infos dans div.msg
+					msg_div.append(msg_infos_ul);
+					
+					// Contenu du message
+					var msg_content = $('<div/>').addClass('msg').append(data.msg_html);
+					// Le div.msg dans div.message
+					msg_div.append(msg_content);
+					
+					// Le div.user-infos dans div.msg-block
+					msg_block_div.append(msg_user_infos);
+					// Le div.message dans div.msg-block
+					msg_block_div.append(msg_div);
+					
+					// Et pour finir, le div.msg-block 
+					// dans le li global (#msg-*)
+					msg_li.append(msg_block_div);
+					
+					
+					// On vide le contenu du textarea (qui est caché)
+					current_form.find('textarea').val('');
+					// Ainsi que le contenu de l'éditeur CKEditor lié
+					// au textarea
+					CKEDITOR.instances[related_ckeditor_id].setData('');
+					
+					
+					// Si c'est un membre normal
+					if(webmaster_roles.indexOf(data.user_role) === -1){
+						// on retire les boutons "modifier / supprimer" des autres messages
+						$('ul.actions-icons').remove();
+					}
+					
+					
+					// Ajoute le message à la fin de la liste
+					// des messages
+					msg_li.appendTo('div.request-content>ul.request-msgs');
+						
+					
+					
+				} else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				// On affiche un msg d'erreur
+				alert('Une erreur s\'est produite : '+errorThrown);
+			});
+			
+		}*/
+		
+		// --- Support technique - Modifier une réponse d'une demande de suppport
+		$('ul.actions-icons li.edit-msg').on('click',function(){
+			var li_el_edit_request_msg = $(this);
+			get_request_msg_src(li_el_edit_request_msg);
+		});
+		
+		// --- Support technique - Récupérer le code source (BBCode) de la réponse
+		// à modifier
+		function get_request_msg_src(li_el_edit_request_msg){
+			
+			var ul_actions_icons = li_el_edit_request_msg.parent();
+			var msg_id = ul_actions_icons.attr('data-msg-id');
+			var div_message = li_el_edit_request_msg.parent().parent().parent().parent();
+			
+			$.ajax({
+				url: "/ajax/membre/support/demandes/get-msg-src",
+				data: {
+					msg_id: msg_id,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				if(data.ok === true){
+					
+					var request_msg_to_edit = data.msg_src;
+
+					// Bloc cloné SANS ses évenements (withDataAndEvents = false)
+					var post_msg_block = $('div.request-content>div.post-msg.ajax').clone(false);
+					
+					var cancel_btn = $('<span/>').addClass('btn btn-primary btn-sm cancel-btn').text($.i18n._('cancel'));
+					cancel_btn.on('click',function(/*event*/){
+						// Annuler l'édition du message
+						var post_msg_bloc = $(this).parent().parent().parent();
+
+						var cancel_confirm = confirm($.i18n._('are_you_sure_to_cancel_msg_edit'));
+						if (cancel_confirm) {
+							// L'utilisateur a validé la confirmation,
+							// donc :
+							// - on retire l'éditeur CKEditor
+							// - on réaffiche les boutons
+							// ainsi, que le message d'origine
+							
+							// On supprime l'instance du CKEditor souhaitée
+							CKEDITOR.instances['msg-edit-'+msg_id].destroy();
+
+							// Puis, on supprime le bloc permettant de modifier le message
+							post_msg_bloc.remove();
+
+							// On réaffiche les boutons d'action
+							div_message.find('ul.infos ul.actions-icons').css('display','');
+							
+							// On réaffiche le message d'origine
+							div_message.find('div.msg').css('display','');
+							
+						}
+						
+						// Annule l'évenement par défaut du bouton (button)
+						//event.preventDefault();
+						
+					});
+
+					post_msg_block.css('display','block');
+					post_msg_block.find('form.msg-form').attr('data-msg-id',msg_id);
+					post_msg_block.find('form.msg-form>div#cke_msg-input').remove();
+					post_msg_block.find('form.msg-form>textarea')
+							.attr('id','msg-edit-'+msg_id)
+							.attr('name','msg-edit-'+msg_id)
+							.css('visibility','')
+							.css('display','')
+							.val(request_msg_to_edit);
+					post_msg_block.find('[type="submit"]').text(' '+$.i18n._('edit')).prepend('<i class="fas fa-pencil-alt"></i>');
+					post_msg_block.find('div.btns').append(cancel_btn); // Ajoute le bouton "Annuler"
+					post_msg_block.insertAfter(div_message.find('div.msg'));
+
+					// Transforme le textarea classique en un éditeur CKEditor
+					CKEDITOR.replace('msg-edit-'+msg_id);
+
+					// L'évenement submit n'est PAS défini, car le "div.message"
+					// avait été cloné SANS les évenements (param : false)
+
+					// On ajoute l'évenement submit personnalisé sur le formulaire
+					post_msg_block.find('form.msg-form').on('submit',function(event){
+						var current_form = $(this);
+
+						edit_request_msg(current_form);
+
+						// Annule l'évenement submit par défaut
+						event.preventDefault();
+					});
+
+					// On masque le "ul.actions-icons" du message
+					ul_actions_icons.css('display','none');
+					div_message.find('div.msg').css('display','none');
+					
+				}  else {
+					// Une erreur s'est produite
+					div_message.find('div.msg').prepend('<div class="alert alert-dismissible alert-danger">'+
+															  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+															  data.msg+
+														  '</div>');
+					
+					// Enleve le message d'erreur automatiquement après 8 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 8000);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		// --- Support technique - Fonction permettant de modifier une réponse
+		// à une demande de support
+		function edit_request_msg(current_form){
+			
+			// On désactive le bouton submit du formulaire pour
+			// éviter les doubles clics et donc un double envoi
+			// de données identiques au serveur
+			current_form.find('[type="submit"]').addClass('disabled').prop('disabled',true);
+			
+			// Textarea se trouvant dans le formulaire soumis (submit)
+			var ref_textarea = current_form.find('textarea.ckeditor');
+			
+			// ID du textarea
+			var related_ckeditor_id = ref_textarea.attr('id');
+			
+			// ID du message se trouvant dans un
+			// attribut data-* de la balise "form".
+			var msg_id = current_form.attr('data-msg-id');
+			
+			// Message de l'utilisateur en BBCODE
+			// récupéré depuis l'instance de CKEDITOR liée
+			// au textarea récupéré plus haut.
+			var message = CKEDITOR.instances[related_ckeditor_id].getData();
+			
+			$.ajax({
+				url: "/ajax/membre/support/demandes/edit-msg",
+				data: {
+					msg_id: msg_id,
+					message: message,
+				},
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				if(data.ok === true){
+					// Message modifié
+					current_form.parent().parent().find('div.msg')
+						.html(data.message_html)
+						.css('display','')
+						.prepend('<div class="alert alert-dismissible alert-success">'+
+									  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+									  data.msg+
+								'</div>');
+					
+					// On supprime l'instance du CKEditor souhaitée
+					CKEDITOR.instances[related_ckeditor_id].destroy();
+
+					// Puis, on supprime le bloc permettant de modifier le message
+					current_form.parent().remove();
+					
+					// On réaffiche les boutons d'action
+					current_form.parent().parent().find('ul.infos ul.actions-icons').css('display','');
+					
+				}  else {
+					// Une erreur s'est produite
+					current_form.find('div.error-msg').append('<div class="alert alert-dismissible alert-danger">'+
+																  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+																  data.message+
+															  '</div>');
+				}
+				
+				// Enleve le message d'erreur automatiquement après 4 secondes.
+				setTimeout(function(){
+					$('div.alert.alert-dismissible').remove();
+				}, 4000);
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				
+				// On réactive le bouton "submit" du formulaire
+				current_form.find('[type="submit"]').removeClass('disabled').prop('disabled',false);
+				
+				// On affiche un msg d'erreur
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+				
+			});
+		}
+		
+		// --- Support technique - Supprimer un message d'une demande de support
+		$('ul.actions-icons li.delete-msg').on('click',function(){
+			var msg_id = $(this).parent().attr('data-msg-id');
+			var msg_li = $(this).parent().parent().parent().parent().parent().parent();
+			del_request_msg(msg_id,msg_li);
+		});
+		
+		// --- Support technique - Suppression d'un message d'une demande de support
+		function del_request_msg(msg_id,msg_li){
+			
+			var confirm_msg = $.i18n._('are_you_sure_to_del_msg');
+			
+			var cancel_confirm = confirm(confirm_msg);
+			if (cancel_confirm) {
+				// L'utilisateur a validé la confirmation
+
+				$.ajax({
+					url: "/ajax/membre/support/demandes/del-msg",
+					data: {
+						msg_id: msg_id,
+					},
+					type: "POST",
+					// The type of data we expect back
+					dataType : "json",
+				})
+				.done(function(data) {
+
+					var msg_color = '';
+					if(data.ok === true){
+						// Message supprimé
+						msg_color = 'success';
+
+					} else {
+						// Message NON supprimé
+						msg_color = 'danger';
+					}
+
+					// Affiche un message de succès ou d'erreur à la place du message
+					$('<div class="alert alert-dismissible alert-'+msg_color+'">'+
+						  '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+						  data.msg+
+					  '</div>').insertBefore(msg_li);
+
+					// Enleve le message de la liste si il
+					// a été supprimé en BDD
+					if(data.ok === true){
+						msg_li.remove();
+					}
+					
+					// Enleve le message d'erreur automatiquement après 4 secondes.
+					setTimeout(function(){
+						$('div.alert.alert-dismissible').remove();
+					}, 4000);
+
+				})
+				.fail(function(jqXHR, textStatus, errorThrown){
+					alert($.i18n._('error_occurred')+' : '+errorThrown);
+				});
+			}
+			
+		}
+		
+		// Si le plugin tooltipster est chargé
+		if(jQuery().tooltipster){
+			
+			$('body').on('mouseenter', 'ul.comments li.comm_status>span.badge:not(.tooltipstered)', function(){
+				$(this).tooltipster({
+					updateAnimation: null,
+					maxWidth: 400
+				})
+				.tooltipster('open');
+			});
+			
+			// Affichage des infos de l'utilisateur en ajax
+			$('body').on('mouseenter', 'ul.comments li.username:not(.tooltipstered),ul.request-msgs li.username:not(.tooltipstered)', function(){
+				$(this).tooltipster({
+					maxWidth: 400,
+					content: '<div class="progress" style="width:50px;"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div></div>',
+					contentAsHTML: true,
+					// 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
+					functionBefore: function(instance, helper) {
+
+						var $origin = $(helper.origin);
+
+						// we set a variable so the data is only loaded once via Ajax, not every time the tooltip opens
+						if ($origin.data('loaded') !== true) {
+
+							var username = $($origin).attr('data-username');
+
+							$.ajax({
+							  type: 'POST',
+							  url: '/ajax/membre/get-user-infos',
+							  data: {
+								  username: username,
+							  },
+							  success: function(data){
+
+								  var member_infos = $('<div/>').addClass('member-infos-popup');
+
+								  var member_icon = $('<i/>');
+								  var member_title = $('<p/>');
+								  var member_name = $('<span/>').addClass('username').text(data.username);
+
+								  // Nom d'utilisateur (+ rôle si défini)
+								  // et icône en fonction du rôle
+								  if(data.role !== ''){
+									  // Webmaster
+									  member_icon.addClass('fas fa-user-shield');
+									  member_name.append(' (<span class="role">'+data.role+'</span>)');
+
+								  } else {
+									  // Utilisateur
+									  member_icon.addClass('fas fa-user');
+								  }
+								  member_name.prepend(member_icon);
+								  member_title.append(member_name);
+								  member_infos.append(member_title);
+
+								  // Liste d'infos avec des icônes
+								  var member_ul_infos = $('<ul/>').addClass('member-infos');
+								  var member_country = $('<li/>').text(data.country).prepend('<i class="fas fa-map-marker-alt"></i>');
+								  var member_msg_count = $('<li/>').text(data.comments_count+' '+$.i18n._('comments')).prepend('<i class="fas fa-comments"></i>');
+								  var member_register_date = $('<li/>').text($.i18n._('registered')+' '+data.created).prepend('<i class="far fa-calendar-alt"></i>');
+								  var member_last_login = $('<li/>').text($.i18n._('seen')+' '+data.last_login).prepend('<i class="far fa-clock"></i>');
+
+								  member_ul_infos.append(member_country); // Pays de l'utilisateur
+								  member_ul_infos.append(member_msg_count); // Nbr de commentaires postés
+								  member_ul_infos.append(member_register_date); // Date d'inscription
+								  member_ul_infos.append(member_last_login); // Date de dernière connexion
+
+								  member_infos.append(member_ul_infos);
+
+								  // call the 'content' method to update the content of our tooltip with the returned data.
+								  // note: this content update will trigger an update animation (see the updateAnimation option)
+								  instance.content(member_infos);
+
+								  // to remember that the data has been loaded
+								  $origin.data('loaded', true);
+
+							  },
+							  error: function () {
+								  alert($.i18n._('error_occured_get_user_infos'));
+							  },
+							  dataType:"json"
+							});
+
+						}
+					}
+				})
+				.tooltipster('open');
+			});
+		}
+		
+		// Espace membre - Favoris - Supprimer une formation / tutoriel favori
+		$('li.btn.del-fav').on('click',function(event){
+			
+			var res_type = $(this).attr('data-res-type');
+			var res_id = $(this).attr('data-res-id');
+			var target_site = $(this).attr('data-target-site'); // iw OU iw-pro
+			
+			var ajax_url = '';
+			var ajax_data = {
+				favorite: 0,
+			};
+			
+			ajax_data.target_site = target_site;
+			
+			if(res_type === 'formation'){
+				// Formation a enlever des favoris
+				ajax_url = '/ajax/membre/formations/add-to-favorites';
+				res_id = Number(res_id);
+				ajax_data.formation_id = res_id;
+				
+			} else if(res_type === 'tuto'){
+				// Tutoriel a enlever des favoris
+				ajax_url = '/ajax/membre/tutoriels/add-to-favorites';
+				res_id = Number(res_id);
+				ajax_data.tuto_id = res_id;
+				
+			} else {
+				alert($.i18n._('unknown_resource_type'));
+				return false;
+			}
+			
+			$.ajax({
+				// The URL for the request
+				url: ajax_url,
+				// The data to send (will be converted to a query string)
+				data: ajax_data,
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				if(data === true){
+					
+					// Ajouter une condition (iw / pro grace au target site)
+					// pour enlever le bon élément graphiquement.
+					// Coté serveur, c'est déjà OK
+					if(res_type === 'formation'){
+						$('ul.fav-formations.fav-site-'+target_site+'>li#fav-formation-'+res_id+'-'+target_site).remove();
+						
+						// Si il ne reste aucun favori
+						if($('ul.fav-formations.fav-site-'+target_site+'>li').length <= 0){
+							// On affiche un message après le "ul" qui est vide
+							var no_course_found = $('<p/>').text($.i18n._('no_course_in_favorites'));
+							no_course_found.insertAfter($('ul.fav-formations.fav-site-'+target_site));
+						}
+						
+					} else if(res_type === 'tuto'){
+						$('ul.fav-tutos.fav-site-'+target_site+'>li#fav-tuto-'+res_id+'-'+target_site).remove();
+						
+						// Si il ne reste aucun favori
+						if($('ul.fav-tutos.fav-site-'+target_site+'>li').length <= 0){
+							// On affiche un message après le "ul" qui est vide
+							var no_tuto_found = $('<p/>').text($.i18n._('no_tuto_in_favorites'));
+							no_tuto_found.insertAfter($('ul.fav-tutos.fav-site-'+target_site));
+						}
+					}
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+			// Annule l'évenement par défaut du "a" où
+			// se trouve ce bouton
+			event.preventDefault();
+			
+		});
+		
+		if($().datepicker) {
+			$('input.datepicker').datepicker({
+				dateFormat: "dd/mm/yy",
+				changeMonth: true,
+      			changeYear: true,
+				minDate: '-100Y', // Min : il y a 100 ans
+				maxDate: '-1D', // Max hier
+			});
+		}
+		
+		// Support technique - Utiliser une autre configuration système.
+		$('a#specify-new-sys-config').on('click', function() {
+			$('div.existing-sys-config').css('display','none');
+			$('div.new-sys-config').css('display','block');
+		});
+
+		// Support technique - Utiliser la configuration système de son compte
+		$('a#use-own-sys-config').on('click', function() {
+			$('div.existing-sys-config').css('display','block');
+			$('div.new-sys-config').css('display','none');
+		});
+		
+		if($('div.no-sys-config').length > 0){
+			// Si l'utilisateur n'a pas indiquer de configuration système dans son compte,
+			// on affiche directement le formulaire qui permet d'en spécifier une avec la demande.
+			// Ainsi, les messages d'erreurs s'afficheront si les champs requis ne sont pas remplis
+			$('a#specify-new-sys-config').trigger('click');
+		}
+		
+		
+		
+		var next_attachment_index = $('div#upload_fields>div.file').length;
+		$('span#support_add_files_to_request').on('click',function(){
+			
+			// On récupère une copie de la div contenant :
+			// - le input file caché
+			// - le input text gris
+			// - le bouton Parcourir
+			var attachment_field = $('div#upload_fields>div:first-child').clone();
+			
+			var orig_input_file_attr_id = attachment_field.find('[type="file"]').attr('id');
+			var orig_input_file_attr_name = attachment_field.find('[type="file"]').attr('name');
+			var orig_input_file_change_ev = attachment_field.find('[type="file"]').attr('onchange');
+			
+			var orig_button_click_ev = attachment_field.find('button.btn').attr('onclick');
+			
+			var orig_input_text_attr_id = attachment_field.find('[type="text"]').attr('id');
+			var orig_input_text_attr_name = attachment_field.find('[type="text"]').attr('name');
+			var orig_input_text_click_ev = attachment_field.find('[type="text"]').attr('onclick');
+			
+			// Le input file caché
+			attachment_field.find('[type="file"]')
+									.attr('id',orig_input_file_attr_id.replace('support-attachments-0-','support-attachments-'+next_attachment_index+'-'))
+									.attr('name',orig_input_file_attr_name.replace('[0][attachment_fake]','['+next_attachment_index+'][attachment_fake]'))
+									.attr('onchange',orig_input_file_change_ev.replace('support-attachments-0-','support-attachments-'+next_attachment_index+'-'));
+			
+			// Bouton Parcourir
+			attachment_field.find('button.btn')
+									.attr('onclick',orig_button_click_ev.replace('support-attachments-0-','support-attachments-'+next_attachment_index+'-'));
+			
+			// Le champ texte visible en gris
+			attachment_field.find('[type="text"]')
+									.attr('id',orig_input_text_attr_id.replace('support-attachments-0-attachment-fake','support-attachments-'+next_attachment_index+'-attachment-fake'))
+									.attr('name',orig_input_text_attr_name.replace('[0][attachment_fake-text]','['+next_attachment_index+'][attachment_fake-text]'))
+									.attr('onclick',orig_input_text_click_ev.replace('support-attachments-0-','support-attachments-'+next_attachment_index+'-'))
+									.val('');
+			
+			// Supprime le message d'erreur en-dessous du champ
+			// si il y en a un
+			attachment_field.find('div.invalid-feedback').remove();
+			
+			// On ajoute le nouveau div dans le bloc "div#upload_fields"
+			$('div#upload_fields').append(attachment_field);
+			
+			// On incrémente le compteur
+			next_attachment_index += 1;
+			
+		});
+		
+		// Affiche les notifications créées précédemment dans le code source
+		$('.toast').toast('show');
+		
+		
+		
+		$('.open-survey').on('click',function(){
+			var src_el = $(this);
+			open_survey_click_event(src_el);
+		});
+		
+		function open_survey_click_event(src_el){
+			// On utilise un attribut "data-modal-status" pour
+			// ne pas faire plusieurs requêtes ajax en même temps
+			// si l'utilisateur clique plusieurs fois sur un lien
+			// pour afficher un sondage
+			var survey_modal = $('div#RespondToSurveyModal');
+			
+			if($('div#RespondToSurveyModal').length > 0){
+				// Si une fenêtre modale à déjà été créée pour répondre à
+				// un sondage, on vérifie si le nouveau lien utilisé correspond
+				// au même sondage
+				var survey_id_already_open = survey_modal.attr('data-survey-id');
+				var new_survey_id = src_el.attr('data-survey-id');
+				
+				if(survey_id_already_open == new_survey_id){
+					// Si c'est le même sondage, on affiche simplement la fenêtre modale déjà créée
+					survey_modal.modal('show');
+				} else {
+					//alert('Attention : changement de sondage');
+					change_survey_confirm(src_el);
+				}
+			} else {
+				// La fenêtre modale n'a pas encore été créée
+				if($(this).attr('data-modal-status') != 'loading'){
+					var survey_id = src_el.attr('data-survey-id');
+					
+					var linked_tuto_id = src_el.attr('data-tuto-id');
+					if(typeof linked_tuto_id == "undefined" || linked_tuto_id < 0){
+						linked_tuto_id = 0;
+					}
+					
+					var linked_formation_id = src_el.attr('data-formation-id');
+					if(typeof linked_formation_id == "undefined" || linked_formation_id < 0){
+						linked_formation_id = 0;
+					}
+					
+					open_survey_modal(src_el,survey_id,linked_tuto_id,linked_formation_id);
+					src_el.attr('data-modal-status','loading');
+				}
+			}
+		}
+		
+		function change_survey_screen(survey_screen){
+			// Valeurs possibles pour survey_screen : welcome, questions, finish
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			
+			// 1 : Ecran de bienvenue au sondage
+			if(survey_screen == 'welcome'){
+				survey_modal.find('div.survey-welcome-screen').css('display','');
+				survey_modal.find('button.begin-survey-btn').css('display','');
+				survey_modal.find('button.cancel-btn').css('display','');
+			} else {
+				survey_modal.find('div.survey-welcome-screen').css('display','none');
+				survey_modal.find('button.begin-survey-btn').css('display','none');
+				survey_modal.find('button.cancel-btn').css('display','none');
+			}
+			
+			// 2 : Affichage du sondage de profil
+			if(survey_screen == 'profile'){
+				survey_modal.find('div.survey-profile-screen').css('display','');
+				survey_modal.find('button.save-profile-btn').css('display','');
+			} else {
+				survey_modal.find('div.survey-profile-screen').css('display','none');
+				survey_modal.find('button.save-profile-btn').css('display','none');
+			}
+			
+			// 3 : Affichage des questions
+			if(survey_screen == 'questions'){
+				survey_modal.find('div.survey-questions').css('display','');
+				survey_modal.find('button.prev-questions-btn').css('display','');
+				survey_modal.find('button.next-questions-btn').css('display','');
+			} else {
+				survey_modal.find('div.survey-questions').css('display','none');
+				survey_modal.find('button.prev-questions-btn').css('display','none');
+				survey_modal.find('button.next-questions-btn').css('display','none');
+			}
+			
+			// 4 : Affichage de l'écran de fin
+			if(survey_screen == 'finish'){
+				survey_modal.find('div.survey-finish-screen').css('display','');
+			} else {
+				survey_modal.find('div.survey-finish-screen').css('display','none');
+			}
+			
+		}
+		
+		function open_survey_modal(src_el,survey_id,linked_tuto_id,linked_formation_id){
+			
+			// Charger les infos du sondages
+			$.ajax({
+				// The URL for the request
+				url: '/ajax/surveys/get-survey-infos',
+				// The data to send (will be converted to a query string)
+				data: {
+					survey_id: survey_id,
+					tuto_id: linked_tuto_id,
+					formation_id: linked_formation_id,
+				},
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				src_el.attr('data-modal-status','loaded');
+				
+				if($('#RespondToSurveyModal').length <= 0){
+					// SI la fenêtre modale n'existe pas encore dans le DOM,
+					// on la crée
+					var modal_template = $('<div class="modal" tabindex="-1" role="dialog" id="RespondToSurveyModal" data-survey-id="" data-nbr-questions="">'+
+											  '<div class="modal-dialog modal-lg" role="document">'+
+												'<div class="modal-content">'+
+												  '<div class="modal-header">'+
+													'<h4 class="modal-title"></h4>'+
+													'<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+													  '<span aria-hidden="true">&times;</span>'+
+													'</button>'+
+												  '</div>'+
+												  '<div class="modal-body">'+
+												  '</div>'+
+												  '<div class="modal-footer">'+
+													//'<button type="button" class="btn btn-success begin-survey-btn"><i class="fas fa-comment"></i> <span class="action-name">Accéder au sondage</span></button>'+
+													//'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>'+
+												  '</div>'+
+												'</div>'+
+											  '</div>'+
+											'</div>');
+					
+					// On modifie le titre et l'attribut data-survey-id du template
+					// de la fenêtre modale
+					modal_template.attr('data-survey-id',data.id);
+					modal_template.attr('data-tuto-id',linked_tuto_id);
+					modal_template.attr('data-formation-id',linked_formation_id);
+					modal_template.attr('data-nbr-questions',data.nbr_questions);
+					modal_template.find('.modal-title').text(data.survey_name);
+
+					// Création de l'écran d'acceuil du sondage
+					var survey_welcome_screen = $('<div/>').addClass('survey-welcome-screen');
+
+					var survey_logo = $('<div/>').addClass('survey-logo');
+					var survey_logo_img = $('<img/>')
+											.attr('src','//'+fr_iw_domain+'/images/surveys/survey-logo.png')
+											.attr('alt',$.i18n._('survey'));
+					survey_logo.append(survey_logo_img);
+
+					var survey_welcome_text = $('<div/>').addClass('survey-welcome-text');
+					var welcome_text_p1 = $('<p/>').text($.i18n._('welcome_to_survey'));
+					var welcome_text_p2 = $('<p/>').html($.i18n._('thanks_to_join_this_survey')+'<br/>'+$.i18n._('your_opinion_is_important'));
+					var survey_description = $('<p/>').addClass('survey-description').text(data.survey_description);
+					var survey_subject = $('<p/>').addClass('survey-subject').text($.i18n._('subject')+' : ');
+					var survey_subject_name = $('<span/>').addClass('survey-subject-name').text(data.survey_subject);
+					survey_subject.append(survey_subject_name);
+
+					var privacy_infos = $('<p/>').addClass('privacy-infos').text(' '+$.i18n._('answers_will_not_be_shared'));
+					var privacy_infos_icon = $('<i/>').addClass('fas fa-info-circle');
+					privacy_infos.prepend(privacy_infos_icon);
+
+					survey_welcome_text.append(welcome_text_p1);
+					survey_welcome_text.append(welcome_text_p2);
+					survey_welcome_text.append(survey_description);
+					survey_welcome_text.append(survey_subject);
+					survey_welcome_text.append(privacy_infos);
+
+					survey_welcome_screen.append(survey_logo);
+					survey_welcome_screen.append(survey_welcome_text);
+
+					// On met l'écran d'acceuil dans le template principal
+					modal_template.find('div.modal-body').append(survey_welcome_screen);
+
+
+					// Création des boutons pour l'écran d'acceuil
+					var begin_survey_btn = $('<button/>')
+												.attr('type','button')
+												.addClass('btn btn-success begin-survey-btn')
+												.text(' '+$.i18n._('access_to_survey'));
+					var begin_survey_btn_icon = $('<i/>').addClass('fas fa-comment');
+					begin_survey_btn.prepend(begin_survey_btn_icon);
+					
+					// Evenement clic du bouton "Accéder au sondage"
+					begin_survey_btn.on('click',begin_suvey_click_event);
+
+					var cancel_btn = $('<button/>')
+										.attr('type','button')
+										.addClass('btn btn-secondary cancel-btn')
+										.attr('data-dismiss','modal')
+										.text($.i18n._('cancel'));
+
+					// On met les boutons de l'écran d'acceuil dans le template principal
+					modal_template.find('div.modal-footer').append(begin_survey_btn);
+					modal_template.find('div.modal-footer').append(cancel_btn);
+					
+					// Pour finir, on met la fenêtre modal dans le DOM de la page
+					// et on l'affiche.
+					$('body').append(modal_template);
+					$('div#RespondToSurveyModal').modal('show');
+					
+				} else {
+					var survey_modal = $('div#RespondToSurveyModal');
+					
+					// Sinon, on modifie la fenêtre modale existante
+					// Mais, avant on la masque à l'utilisateur
+					survey_modal.modal('hide');
+					
+					// On modifie le titre et l'attribut data-survey-id
+					// de la fenêtre modale
+					survey_modal.attr('data-survey-id',data.id);
+					survey_modal.attr('data-tuto-id',linked_tuto_id);
+					survey_modal.attr('data-formation-id',linked_formation_id);
+					survey_modal.attr('data-nbr-questions',data.nbr_questions);
+					survey_modal.find('.modal-title').text(data.survey_name);
+					
+					// On affiche la description et le sujet du sondage
+					$('p.survey-description').text(data.survey_description);
+					$('p.survey-subject>span.survey-subject-name').text(data.survey_subject);
+					
+					// On change l'interface en : écran de bienvenue au sondage
+					change_survey_screen('welcome');
+					
+					// Et pour finir, on affiche la fenêtre modale
+					survey_modal.modal('show');
+				}
+				
+				if(data.already_completed){
+					// <div class="alert alert-success survey-already-completed" style="overflow: hidden;padding: 10px;"><div class="float-left completed_icon" style="margin-right: 10px;"><img src="/images/surveys/thank-you-icon.png" style="height: 32px;"></div><div class="completed_msg" style="overflow: hidden;line-height: 32px;">Vous avez déjà complété ce sondage ! Merci pour vos réponses ;-)</div></div>
+					if($('div.survey-already-completed').length == 0){
+						var survey_already_completed_div = $('<div/>').addClass('alert alert-success survey-already-completed');
+						
+						var survey_already_completed_icon = $('<div/>').addClass('completed_icon');
+						var survey_already_completed_img = $('<img/>').attr('src','//'+fr_iw_domain+'/images/surveys/thank-you-icon.png');
+						survey_already_completed_icon.append(survey_already_completed_img);
+						
+						var survey_already_completed_msg = $('<div/>').addClass('completed_msg').text($.i18n._('survey_already_completed'));
+						
+						survey_already_completed_div.append(survey_already_completed_icon);
+						survey_already_completed_div.append(survey_already_completed_msg);
+						
+						survey_already_completed_div.insertAfter('p.survey-subject');
+						
+						$('button.begin-survey-btn').addClass('disabled').prop('disabled',true);
+						
+					}
+					
+				} else {
+					$('div.survey-already-completed').remove();
+					$('button.begin-survey-btn').removeClass('disabled').prop('disabled',false);
+				}
+				
+				// On redimensionne la fenêtre modale pour qu'elle s'adapte
+				// à la fenêtre du navigateur web.
+				// Note : ensuite, au redimenssionnement, notre fonction "redimenssionnement"
+				// rappelera cette fonction automatiquement
+				//fit_bs_modal_body($(".modal-dialog:last"), 15);
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				src_el.attr('data-modal-status','error');
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		function check_profile_status(src_el){
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			var survey_id = survey_modal.attr('data-survey-id');
+			var formation_id = survey_modal.attr('data-formation-id');
+			var tuto_id = survey_modal.attr('data-tuto-id');
+			
+			// Vérifie si le profil du visiteur ou du membre
+			// est complet
+			$.ajax({
+				// The URL for the request
+				url: '/ajax/surveys/check-profile-status',
+				// The data to send (will be converted to a query string)
+				data: {
+					survey_id: survey_id,
+					formation_id: formation_id,
+					tuto_id: tuto_id,
+				},
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				//console.log(data);
+				
+				if(data.missing_infos.length == 0){
+					// Si il ne manque aucune info de profil, c'est bon
+					survey_modal.attr('data-profile-complete','yes');
+					survey_modal.attr('data-user-logged',Number(data.user_logged));
+					
+					save_profile({});
+					
+					// Comme les données de profil sont complètes,
+					// on commence le vrai sondage
+					//begin_survey(src_el);
+					
+				} else {
+					// Sinon, on indique que les données de profil sont incomplètes
+					survey_modal.attr('data-profile-complete','no');
+					survey_modal.attr('data-user-logged',Number(data.user_logged));
+					
+					// Dans ce cas, on charge le questionnaire de profil
+					begin_profile_survey(data.missing_infos);
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				src_el.removeClass('disabled');
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		function begin_suvey_click_event(){
+			
+			var src_el = $(this);
+			
+			if(src_el.hasClass('disabled')){
+				return false;
+			} else {
+				src_el.addClass('disabled').prop('disabled',true);
+			}
+			
+			//var survey_modal = $('div#RespondToSurveyModal');			
+			//var survey_id = survey_modal.attr('data-survey-id');
+			
+			begin_survey(src_el);
+			
+		}
+		
+		function begin_profile_survey(missing_infos){
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			var user_logged = survey_modal.attr('data-user-logged');
+			//console.log(user_logged);
+			
+			// Création du sondage de profil
+			var survey_profile_screen = $('<div/>').addClass('survey-profile-screen');
+			
+			var survey_profile_title = $('<h5/>').text($.i18n._('profile_questions'));
+			var survey_profile_description = $('<p/>').text($.i18n._('profile_infos_help_us'));
+			survey_profile_screen.append(survey_profile_title);
+			survey_profile_screen.append(survey_profile_description);
+			
+			if(user_logged == 0){
+				var div_infos_msg_div = $('<div/>').addClass('alert alert-info');
+				var div_infos_msg_p = $('<p/>').html($.i18n._('if_you_have_an_account')+', <a href="'+$.i18n._('login_url')+'">'+$.i18n._('login_to_it')+'</a> '+$.i18n._('to_skip_this_step'));
+				div_infos_msg_div.append(div_infos_msg_p);
+				survey_profile_screen.append(div_infos_msg_div);
+			}
+			
+			
+			
+			var profile_survey_form = $('<form/>').attr('id','profile-survey-form');
+			
+			var profile_questions_list = $('<div/>').addClass('profile-questions');
+			
+			
+			// Quel est votre prénom ou pseudo ?
+			// Si le prénom est manquant
+			if(missing_infos.indexOf('name') >= 0){
+				var profile_question = $('<div/>').addClass('profile-question').addClass('profile-question-name');
+				var profile_question_title = $('<h5/>').addClass('profile-question-title').text($.i18n._('what_your_name'));
+
+				var profile_question_answers = $('<div/>').addClass('form-group profile-question-anwers');
+				var profile_text_answer_input = $('<input/>')
+													.addClass('form-control form-control-sm text-answer')
+													.attr('type','text')
+													.attr('id','name')
+													.attr('name','name');
+				profile_question_answers.append(profile_text_answer_input);
+				profile_question.append(profile_question_title);
+				profile_question.append(profile_question_answers);
+				profile_questions_list.append(profile_question);
+			}
+			
+			
+			// Quel est votre genre ? - QUESTION ---
+			// Si le genre est manquant
+			if(missing_infos.indexOf('gender') >= 0){
+				profile_question = $('<div/>').addClass('profile-question').addClass('profile-question-gender');
+				profile_question_title = $('<h5/>').addClass('profile-question-title').text($.i18n._('what_your_gender'));
+
+				profile_question_answers = $('<div/>').addClass('form-group profile-question-anwers');
+
+				// Quel est votre genre ? - REPONSES - DEBUT
+				var genders = [{
+					gender_id: 1,
+					gender_name: $.i18n._('man'),
+					gender_icon: 'fas fa-mars',
+					hex_color: '#5bc0de',
+				},{
+					gender_id: 2,
+					gender_name: $.i18n._('women'),
+					gender_icon: 'fas fa-venus',
+					hex_color: '#ff7aad',
+				},{
+					gender_id: 3,
+					gender_name: $.i18n._('other'),
+					gender_icon: 'fas fa-transgender-alt',
+					hex_color: '#824ab4',
+				}];
+
+				$.each(genders, function(index, gender_infos){
+
+					var profile_gender_custom_radio = $('<div/>').addClass('custom-control custom-radio');
+
+					// Bouton radio
+					var profile_gender_input = $('<input/>')
+													.attr('type','radio')
+													.attr('id','gender-'+gender_infos.gender_id)
+													.attr('name','gender')
+													.addClass('custom-control-input')
+													.val(gender_infos.gender_id);
+
+					// L'icone
+					var profile_gender_icon = $('<i/>')
+													.addClass(gender_infos.gender_icon)
+													.css('color',gender_infos.hex_color)
+													.css('font-size','18px');
+
+					// Le label
+					var profile_gender_label = $('<label/>')
+													.addClass('custom-control-label')
+													.attr('for','gender-'+gender_infos.gender_id)
+													.text(gender_infos.gender_name+' ')
+													.append(profile_gender_icon);
+
+					profile_gender_custom_radio.append(profile_gender_input);
+					profile_gender_custom_radio.append(profile_gender_label);
+
+					profile_question_answers.append(profile_gender_custom_radio);
+
+				});
+
+				profile_question.append(profile_question_title);
+				profile_question.append(profile_question_answers);
+				profile_questions_list.append(profile_question);
+			}
+			// Quel est votre genre ? - REPONSES - FIN
+			
+			
+			// Date de naissance
+			// Si la date de naissance est manquante
+			if(missing_infos.indexOf('born_date') >= 0){
+				var profile_question = $('<div/>').addClass('profile-question').addClass('profile-question-born_date');
+				var profile_question_title = $('<h5/>').addClass('profile-question-title').text($.i18n._('what_your_born_date'));
+
+				var profile_question_answers = $('<div/>').addClass('form-group profile-question-anwers');
+				var profile_text_answer_input = $('<input/>')
+													.addClass('form-control form-control-sm datepicker text-answer')
+													.attr('type','text')
+													.attr('id','born_date')
+													.attr('name','born_date')
+													.attr('placeholder',$.i18n._('date_format'));
+
+				profile_question_answers.append(profile_text_answer_input);
+				profile_question.append(profile_question_title);
+				profile_question.append(profile_question_answers);
+				profile_questions_list.append(profile_question);
+			}
+			// Date de naissance
+			
+			
+			// Particulier ou Pro ? - QUESTION ----
+			if(missing_infos.indexOf('legal_status') >= 0){
+				profile_question = $('<div/>').addClass('profile-question').addClass('profile-question-legal_status');
+				profile_question_title = $('<h5/>').addClass('profile-question-title').text($.i18n._('what_your_status'));
+
+				profile_question_answers = $('<div/>').addClass('form-group profile-question-anwers');
+
+				// Particulier ou Pro ? - REPONSES - DEBUT
+				var legal_statuses = [{
+					status_id: 1,
+					status_name: $.i18n._('individual'),
+					status_icon: 'fas fa-user',
+				},{
+					status_id: 2,
+					status_name: $.i18n._('professional'),
+					status_icon: 'fas fa-user-tie',
+				}];
+
+				$.each(legal_statuses, function(index, legal_status_infos){
+
+					var profile_legal_status_custom_radio = $('<div/>').addClass('custom-control custom-radio');
+
+					// Bouton radio
+					var profile_legal_status_input = $('<input/>')
+													.attr('type','radio')
+													.attr('id','legal-status-'+legal_status_infos.status_id)
+													.attr('name','legal_status')
+													.addClass('custom-control-input')
+													.val(legal_status_infos.status_id);
+
+					// L'icône
+					var profile_legal_status_icon = $('<i/>').addClass(legal_status_infos.status_icon);
+
+					// Le label
+					var profile_legal_status_label = $('<label/>')
+													.addClass('custom-control-label')
+													.attr('for','legal-status-'+legal_status_infos.status_id)
+													.text(legal_status_infos.status_name+' ')
+													.append(profile_legal_status_icon);
+
+					profile_legal_status_custom_radio.append(profile_legal_status_input);
+					profile_legal_status_custom_radio.append(profile_legal_status_label);
+
+					profile_question_answers.append(profile_legal_status_custom_radio);
+
+				});
+
+				profile_question.append(profile_question_title);
+				profile_question.append(profile_question_answers);
+				profile_questions_list.append(profile_question);
+			}
+			// Particulier ou Pro ?
+			
+			profile_survey_form.append(profile_questions_list);
+			survey_profile_screen.append(profile_survey_form);
+			
+			// On met le sondage de profil dans le DOM
+			survey_modal.find('div.modal-body').append(survey_profile_screen);
+			
+			
+			var save_profile_btn = $('<button/>')
+								.attr('type','button')
+								.addClass('btn btn-primary float-right save-profile-btn')
+								.text($.i18n._('next')+' ');
+			var save_profile_btn_icon = $('<i/>').addClass('fas fa-chevron-right');
+			save_profile_btn.append(save_profile_btn_icon);
+
+			// Evenement clic du bouton "Suivant"
+			save_profile_btn.on('click',save_profile_click_event);
+			
+			// On ajoute le bouton suivant (qui permet de sauvegarder le profil)
+			survey_modal.find('div.modal-footer').append(save_profile_btn);
+			
+			change_survey_screen('profile');
+			
+		}
+		
+		function save_profile_click_event(){
+			
+			var profile_form_data = JSON.stringify($('#profile-survey-form').serializeArray());
+			
+			save_profile(profile_form_data);
+			
+		}
+		
+		function save_profile(form_data){
+			
+			//console.log(form_data);
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			var survey_id = survey_modal.attr('data-survey-id');
+			var formation_id = survey_modal.attr('data-formation-id');
+			var tuto_id = survey_modal.attr('data-tuto-id');
+			
+			// Sauvegarder les infos de profil
+			$.ajax({
+				// The URL for the request
+				url: '/ajax/surveys/save-profile',
+				// The data to send (will be converted to a query string)
+				data: {
+					survey_id: survey_id,
+					formation_id: formation_id,
+					tuto_id: tuto_id,
+					form_data: form_data,
+				},
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				console.log(data);
+				
+				// On supprime tous les messages d'erreurs
+				$('form#profile-survey-form div.error-field').remove();
+				
+				if(data.profile_saved){
+					// Profil sauvegardé sans erreur
+					survey_modal.attr('data-profile-complete','yes');
+					survey_modal.attr('visitor_id',data.visitor_id);
+					
+					begin_survey();
+					
+				} else {
+					// Des erreurs se sont produites lors de la sauvgarde du profil
+					var global_error_msg = $('<div/>').text($.i18n._('please_check_form_below')).addClass('error-field text-danger');
+					$('form#profile-survey-form').prepend(global_error_msg);
+					
+					$.each(data.incorrect_fields, function(index,field_name) {
+						var error_msg = $('<div/>').text($.i18n._('this_field_is_incorrect')).addClass('error-field text-danger');
+						//var related_input_field = $('input[name="'+field_name+'"]:last-child');
+						//error_msg.insertAfter(related_input_field);
+						$('div.profile-question-'+field_name).append(error_msg);
+					});
+				}
+				survey_modal.find('div.modal-body')[0].scrollTop = 0;
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		function begin_survey(src_el){
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			var survey_id = survey_modal.attr('data-survey-id');
+			var formation_id = survey_modal.attr('data-formation-id');
+			var tuto_id = survey_modal.attr('data-tuto-id');
+			
+			if(survey_modal.attr('data-profile-complete') != 'yes'){
+				return check_profile_status(src_el);
+			}
+			
+			//var next_question = 1;
+			
+			// Charger les infos du sondages
+			$.ajax({
+				// The URL for the request
+				url: '/ajax/surveys/get-survey-questions',
+				// The data to send (will be converted to a query string)
+				data: {
+					survey_id: survey_id,
+					formation_id: formation_id,
+					tuto_id: tuto_id,
+					//next_question: next_question,
+				},
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				//src_el.removeClass('disabled');
+				
+				//var nbr_total_questions = survey_modal.attr('data-nbr-questions');
+				//var nbr_questions_answered = next_question - 1;
+				
+				if(data.progress_value == data.progress_total){
+					survey_finished();
+					
+				} else {
+					var survey_questions_block;
+					var survey_progress;
+					if($('div.survey-questions').length == 0){
+
+						survey_questions_block = $('<div/>').addClass('survey-questions');
+
+
+						// --- Barre de progression du sondage ---
+						survey_progress = $('<div class="survey-progress">'+
+													'<div class="progress-value">x / x</div>'+
+													'<div class="progress-line">'+
+														'<div class="progress">'+
+														  '<div class="progress-bar" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'+
+														'</div>'+
+													'</div>'+
+												'</div>');
+
+					} else {
+						survey_questions_block = $('div.survey-questions');
+						survey_progress = $('div.survey-questions>div.survey-progress');
+					}
+					//survey_progress.find('div.progress-value').text(nbr_questions_answered+' / '+nbr_total_questions);
+					survey_progress.find('div.progress-value').text(data.progress_value+' / '+data.progress_total);
+
+					// Note : on calcule la progression en %,
+					// puis, on arrondi à l'entier le plus proche (Math.round)
+					var progress_pourcents = Math.round(data.progress_value / data.progress_total * 100);
+
+					survey_progress.find('div.progress-bar')
+						.attr('aria-valuenow',progress_pourcents)
+						.css('width',progress_pourcents+'%');
+					// --- Barre de progression du sondage ---
+
+
+					var survey_questions_list = $('<div/>').addClass('survey-questions-list');
+
+					$.each(data.questions, function(survey_question_js_index, survey_question_data) {
+
+						var survey_question = $('<div/>')
+												.addClass('survey-question')
+												.addClass('survey-question-'+survey_question_data.question_num)
+												.attr('data-q-id',survey_question_data.id);
+
+						var survey_question_title = $('<h5/>').addClass('survey-question-title').text(survey_question_data.question_name);
+						if(survey_question_data.is_required == 1){
+							survey_question_title.text(survey_question_data.question_name+' *');
+						} else {
+							var question_is_facultative = $('<span/>').addClass('question-is-facultative').text($.i18n._('optional'));
+							survey_question_title.append(question_is_facultative);
+						}
+						
+						var survey_question_num = $('<span/>').addClass('survey-question-num').text(survey_question_data.question_num+'.');
+						survey_question_title.prepend(survey_question_num);
+						
+
+						var survey_question_description = $('<p/>').addClass('survey-question-description').html(nl2br(survey_question_data.question_infos));
+
+						var survey_question_answers = $('<div/>').addClass('form-group survey-question-anwers');
+
+						var only_select_this_option_detected = false;
+
+						$.each(survey_question_data.surveys_values, function(survey_answer_js_index, answer_data) {
+
+							if([1,2,4].indexOf(answer_data.answer_type_id) >= 0){
+								// Si le type de réponse (ID) vaut 1, 2 ou 4
+
+								var answer_option_type = '';
+								if(answer_data.answer_type_id == 1){
+									// Si le type de réponse est : ID 1 - Options case à cochée / radio
+									// On regarde si le choix multiple est activé pour cette question
+									if(survey_question_data.has_multi_choices == 1){
+										// Choix multiple autorisé => cases à cochées (checkbox)
+										answer_option_type = 'checkbox';
+									} else {
+										// Choix multiple INTERDIT => boutons radio
+										answer_option_type = 'radio';
+									}
+
+								} else if(answer_data.answer_type_id == 2){
+									// ID 2 - Option radio (aucune de ces réponses)
+									answer_option_type = 'radio';
+
+								} else if(answer_data.answer_type_id == 4){
+									// ID 4 - Case à cocher (checkbox) seule
+									answer_option_type = 'checkbox';
+								}
+
+								var custom_control = $('<div/>').addClass('custom-control custom-'+answer_option_type);
+
+								var answer_input_id = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id;
+								var answer_input_name = 'answer-'+answer_data.surveys_question_id;
+								var answer_option_input = $('<input/>')
+																.attr('type',answer_option_type)
+																.attr('id',answer_input_id)
+																.attr('name',answer_input_name)
+																.addClass('custom-control-input')
+																.val(answer_data.answer_id);
+
+								var answer_option_label = $('<label/>')
+																.addClass('custom-control-label')
+																.attr('for',answer_input_id)
+																.text(answer_data.answer_name);
+
+								if(answer_data.answer_type_id == 1){
+									custom_control.addClass('list-select-option');
+
+								} else if(answer_data.answer_type_id == 2){
+									// ID 2 - Option radio (aucune de ces réponses)
+									answer_option_input.addClass('select-only-this');
+									only_select_this_option_detected = true;
+
+									// Lorsque l'on sélectionne une option "Aucune" (qui est de type radio)
+									answer_option_input.on('change',function(){
+										if($(this).prop('checked') == true){
+											// On décoche toutes les cases à cocher (answer_type_id = 1)
+											// de la même question
+											$('.survey-question-'+survey_question_data.question_num+' div.list-select-option>input[type="checkbox"]').prop('checked',false);
+										}
+									});
+								}
+
+								custom_control.append(answer_option_input);
+								custom_control.append(answer_option_label);
+
+								if(answer_data.has_open_answer && answer_data.open_answers_type_id > 0){
+									var with_open_answer_input = $('<input/>')
+																	.addClass('form-control form-control-sm with-open-answer')
+																	.attr('type',answer_data.input_type)
+																	.attr('id',answer_input_id+'-open-answer')
+																	.attr('name',answer_input_id+'-open-answer');
+									custom_control.append(with_open_answer_input);
+								}
+
+								survey_question_answers.append(custom_control);
+
+							} else if(answer_data.answer_type_id == 3){
+								// ID 3 - Réponse ouverte (texte)
+								/*
+								<div class="form-group">
+								  <label for="exampleTextarea">Example textarea</label>
+								  <textarea class="form-control" id="exampleTextarea" rows="2"></textarea>
+								</div>
+								*/
+								var open_answer_input_id = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id;
+
+								var open_answer_block = $('<div/>').addClass('form-group open-answer');
+								var open_answer_label = $('<label/>')
+															.attr('for',open_answer_input_id)
+															.text(answer_data.answer_name);
+
+								var open_answer_textarea = $('<textarea/>')
+																.addClass('form-control')
+																.attr('id',open_answer_input_id)
+																.attr('name',open_answer_input_id)
+																.attr('rows',2);
+
+								open_answer_block.append(open_answer_label);
+								open_answer_block.append(open_answer_textarea);
+
+								survey_question_answers.append(open_answer_block);
+
+							} else if(answer_data.answer_type_id == 5 || answer_data.answer_type_id == 6){
+
+								var rating_bar_class = '';
+								var rating_bar_nbr_options = 0;
+								if(answer_data.answer_type_id == 5){
+									rating_bar_class = 'survey-rating-bar-squares';
+									rating_bar_nbr_options = 10;
+								} else {
+									// type id = 6
+									rating_bar_class = 'survey-rating-bar-stars';
+									rating_bar_nbr_options = 5;
+								}
+
+								var rating_bar = $('<div/>').addClass('rating-bar');
+
+								var answer_input_id = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id;
+								var answer_input_name = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id+'-rating';
+								var answer_option_select = $('<select/>')
+																.attr('id',answer_input_id)
+																.attr('name',answer_input_name)
+																.addClass(rating_bar_class);
+
+								var answer_option_label = $('<label/>')
+																.css('display','none')
+																.attr('for',answer_input_id)
+																.text(answer_data.answer_name);
+
+								for (var i = 1; i <= rating_bar_nbr_options; i++) {
+									var rating_option = $('<option/>').text(i).val(i);
+									answer_option_select.append(rating_option);
+								}
+
+								rating_bar.append(answer_option_select);
+								rating_bar.append(answer_option_label);
+
+								survey_question_answers.append(rating_bar);
+
+								
+							} else if(answer_data.answer_type_id == 7){
+								// ID 7 - Source externe (nom de la table requis)
+								var answer_option_type = '';
+								if(survey_question_data.has_multi_choices == 1){
+									// Choix multiple autorisé => cases à cochées (checkbox)
+									answer_option_type = 'checkbox';
+								} else {
+									// Choix multiple INTERDIT => boutons radio
+									answer_option_type = 'radio';
+								}
+								
+								var custom_control = $('<div/>').addClass('custom-control custom-'+answer_option_type);
+								
+								$.each(answer_data.ext_data_list, function(index,ext_data_infos) {
+									
+									var custom_control = $('<div/>').addClass('custom-control custom-'+answer_option_type);
+
+									var answer_input_id = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id+'-'+ext_data_infos.id;
+									var answer_input_name = 'answer-'+answer_data.surveys_question_id+'-'+answer_data.answer_id+'-ext-data';
+									var answer_option_input = $('<input/>')
+																	.attr('type',answer_option_type)
+																	.attr('id',answer_input_id)
+																	.attr('name',answer_input_name)
+																	.addClass('custom-control-input')
+																	.val(ext_data_infos.id);
+
+									var answer_option_label = $('<label/>')
+																	.addClass('custom-control-label')
+																	.attr('for',answer_input_id)
+																	.text(ext_data_infos.name);
+									
+									
+									custom_control.append(answer_option_input);
+									custom_control.append(answer_option_label);
+									
+									survey_question_answers.append(custom_control);
+									
+								});
+								
+							}
+
+						});
+
+						if(only_select_this_option_detected){
+							survey_question_answers.find('div.list-select-option>input[type="checkbox"]').on('change',function(){
+								// Lorsque l'on coche une case (answer_type_id = 1) pour une question possédant une 
+								// option "Aucune" de type radio (select-only-this),
+								// on dé-sélectionne l'option "Aucune".
+								if($(this).prop('checked') == true){
+									$('.survey-question-'+survey_question_data.question_num+' input.select-only-this').prop('checked',false);
+								}
+							});
+						}
+
+						survey_question.append(survey_question_title);
+
+						if(survey_question_data.question_infos != ''){
+							survey_question.append(survey_question_description);
+						}
+
+						survey_question.append(survey_question_answers);
+
+						survey_questions_list.append(survey_question);
+
+					});
+
+					var survey_questions_form;
+					if($('form#survey-questions-form').length == 0){
+						survey_questions_form = $('<form/>').attr('id','survey-questions-form');
+					} else {
+						survey_questions_form = $('form#survey-questions-form');
+						survey_questions_form.empty();
+					}
+
+					survey_questions_block.append(survey_progress);
+					survey_questions_form.append(survey_questions_list);
+					survey_questions_block.append(survey_questions_form);
+
+
+
+					//survey_modal.find('.modal-body').append(survey_questions_block);
+					survey_modal.find('.modal-body').append(survey_questions_block);
+
+					// On transforme les select ".survey-rating-bar-squares"
+					// en une barre de 10 cases carrées pour mettre une note
+					$('.survey-rating-bar-squares').barrating({
+						theme: 'bars-square',
+						showSelectedRating: true,
+						showValues: true,
+					});
+
+					// On transforme les select ".survey-rating-bar-stars"
+					// en une barre de 5 étoiles pour mettre une note
+					$('.survey-rating-bar-stars').barrating({
+						theme: 'css-stars',
+						showSelectedRating: true,
+						showValues: false,
+					});
+
+
+					// Création des boutons : précédent et suivant
+					if(survey_modal.find('div.modal-footer button.next-questions-btn').length == 0){
+
+						// Bouton : Précédent (IMPOSSIBLE A GERER - une question répondue ne peut pas être modifiée)
+						/*var prev_btn = $('<button/>')
+											.attr('type','button')
+											.addClass('btn btn-primary float-left prev-questions-btn')
+											.text(' Précédent');
+						var prev_btn_icon = $('<i/>').addClass('fas fa-chevron-left');
+						prev_btn.prepend(prev_btn_icon);*/
+
+						// Bouton : Suivant
+						var next_btn = $('<button/>')
+											.attr('type','button')
+											.addClass('btn btn-primary float-right next-questions-btn')
+											.text($.i18n._('next')+' ');
+						var next_btn_icon = $('<i/>').addClass('fas fa-chevron-right');
+						next_btn.append(next_btn_icon);
+
+						// Evenement clic du bouton "Suivant"
+						next_btn.on('click',survey_next_questions_click_event);
+
+
+						// On ajoute les boutons précédent / suivant
+						//survey_modal.find('div.modal-footer').append(prev_btn);
+						survey_modal.find('div.modal-footer').append(next_btn);
+					}
+					
+					survey_modal.find('div.modal-body')[0].scrollTop = 0;
+
+					// On change l'interface en : affichage des questions
+					change_survey_screen('questions');
+
+
+					// On redimensionne la fenêtre modale pour qu'elle s'adapte
+					// à la fenêtre du navigateur web.
+					// Note : ensuite, au redimenssionnement, notre fonction "redimenssionnement"
+					// rappelera cette fonction automatiquement
+					//fit_bs_modal_body($(".modal-dialog:last"), 15);
+					
+				}
+				
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				
+				// On change l'interface en : affichage des questions
+				change_survey_screen('welcome');
+				
+				$('button.begin-survey-btn').removeClass('disabled').prop('disabled',false);
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		function survey_next_questions_click_event(){
+			var src_el = $(this);
+			src_el.addClass('disabled');
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			var survey_id = survey_modal.attr('data-survey-id');
+			var formation_id = survey_modal.attr('data-formation-id');
+			var tuto_id = survey_modal.attr('data-tuto-id');
+			
+			var questions_ids = [];
+			$('div.survey-questions-list>div').each(function(index,question_div){
+				questions_ids.push($(question_div).attr('data-q-id'));
+			})
+			// Transforme le tableau en une chaine de valeurs séparées par des virgules
+			questions_ids = questions_ids.join();
+			
+			var answers_data = JSON.stringify($('#survey-questions-form').serializeArray());
+			//console.log(JSON.parse(answers_data));
+			
+			// Sauvegarder les réponses de l'utilisateur
+			$.ajax({
+				// The URL for the request
+				url: '/ajax/surveys/save-survey-answers',
+				// The data to send (will be converted to a query string)
+				data: {
+					survey_id: survey_id,
+					formation_id: formation_id,
+					tuto_id: tuto_id,
+					questions_ids: questions_ids,
+					answers_data: answers_data,
+				},
+				// Whether this is a POST or GET request
+				type: "POST",
+				// The type of data we expect back
+				dataType : "json",
+			})
+			.done(function(data) {
+				
+				console.log(data);
+				
+				// On supprime tous les messages d'erreurs
+				$('form#survey-questions-form div.error-field').remove();
+				
+				src_el.removeClass('disabled');
+				
+				if(data.save){
+					// Sauvegarde des réponses : OK
+					// On passe aux questions suivantes
+					begin_survey();
+					
+				} else {
+					// Erreur avec une ou plusieurs questions
+					var global_error_msg = $('<div/>').text($.i18n._('please_check_form_below')).addClass('error-field text-danger');
+					$('form#survey-questions-form').prepend(global_error_msg);
+					
+					$.each(data.incorrect_fields, function(question_id,error_msg) {
+						var error_msg = $('<div/>').text(error_msg).addClass('error-field text-danger');
+						$('div.survey-question[data-q-id="'+question_id+'"]').append(error_msg);
+					});
+				}
+				survey_modal.find('div.modal-body')[0].scrollTop = 0;
+			})
+			.fail(function(jqXHR, textStatus, errorThrown){
+				src_el.removeClass('disabled');
+				alert($.i18n._('error_occurred')+' : '+errorThrown);
+			});
+			
+		}
+		
+		function survey_finished(){
+			
+			var survey_modal = $('div#RespondToSurveyModal');
+			
+			// LE TEMPLATE HTML EST DISPO DANS LE LAYOUT DEFAULT
+			// MAIS IL FAUT LE RECREER ICI EN JS
+			var finish_screen = $('<div/>').addClass('survey-finish-screen');
+			
+			var survey_thanks_div = $('<div/>').addClass('survey-thanks-img');
+			var survey_thanks_img = $('<img/>').attr('src','//'+fr_iw_domain+'/images/surveys/thank-you.png').attr('alt',$.i18n._('thanks'));
+			survey_thanks_div.append(survey_thanks_img);
+			
+			var survey_finish_text = $('<div/>').addClass('survey-finish-text');
+			
+			var survey_finish_title = $('<h5/>').text($.i18n._('thanks_to_completed_this_survey'));
+			var survey_finish_msg = $('<p/>').text($.i18n._('your_answers_help_us'));
+			
+			var survey_follow_us = $('<h5/>').addClass('survey-follow-us').text($.i18n._('support_us_follow_us'));
+			
+			var social_icons_ul = $('<ul/>').addClass('social-icons');
+			
+			var social_icon_utip_li = $('<li/>').addClass('utip');
+			var social_icon_utip_a = $('<a/>').attr('title',$.i18n._('support_us_on_utip')).attr('href','https://utip.io/informatiweb');
+			var social_icon_utip_img = $('<img/>').attr('src','//'+fr_iw_domain+'/images/site/social/utip-icon-mini.png').attr('alt','uTip');
+			
+			var social_links_infos = [{
+					li_class: 'fb',
+					site_name: 'Facebook',
+					link: 'https://www.facebook.com/InformatiWeb.net',
+					fa_icon: 'fab fa-facebook-square',
+			},{
+					li_class: 'tw',
+					site_name: 'Twitter',
+					link: 'https://twitter.com/InformatiWeb',
+					fa_icon: 'fab fa-twitter-square',
+			},{
+					li_class: 'in',
+					site_name: 'LinkedIn',
+					link: 'https://be.linkedin.com/in/lioneleppe',
+					fa_icon: 'fab fa-linkedin',
+			}];
+			
+			social_icon_utip_a.append(social_icon_utip_img);
+			social_icon_utip_li.append(social_icon_utip_a);
+			social_icons_ul.append(social_icon_utip_li);
+			
+			$.each(social_links_infos, function(index, social_link_infos){
+				var social_icon_li = $('<li/>').addClass(social_link_infos.li_class);
+				var social_icon_a = $('<a/>').attr('title',$.i18n._('follow_us_on')+' '+social_link_infos.site_name).attr('href',social_link_infos.link);
+				var social_icon_fa_icon = $('<i/>').addClass(social_link_infos.fa_icon);
+				
+				social_icon_a.append(social_icon_fa_icon);
+				social_icon_li.append(social_icon_a);
+				social_icons_ul.append(social_icon_li);
+				
+			});
+			
+			var survey_donate_title = $('<h5/>').addClass('survey-donate').text($.i18n._('support_us_also_on_utip'));
+			var survey_donate_msg = $('<p/>').addClass('survey-donate-via-utip');
+			var survey_donate_link = $('<a/>').attr('title',$.i18n._('support_us_on_utip')).attr('href','https://utip.io/informatiweb');
+			var survey_donate_img = $('<img/>').addClass('img-fluid').attr('src','//'+fr_iw_domain+'/images/surveys/'+$.i18n._('donate_by_utip_img')).attr('alt','uTip');
+			
+			survey_donate_link.append(survey_donate_img);
+			survey_donate_msg.append(survey_donate_link);
+			
+			survey_finish_text.append(survey_finish_title);
+			survey_finish_text.append(survey_finish_msg);
+			survey_finish_text.append(survey_follow_us);
+			survey_finish_text.append(social_icons_ul);
+			
+			survey_finish_text.append(survey_donate_title);
+			survey_finish_text.append(survey_donate_msg);
+			
+			
+			finish_screen.append(survey_thanks_div);
+			finish_screen.append(survey_finish_text);
+			
+			survey_modal.find('.modal-body').append(finish_screen);
+			
+			
+			var cancel_btn = $('<button/>').addClass('btn btn-primary btn-sm close-modal-btn').attr('type','button').attr('data-dismiss','modal').text($.i18n._('close'));
+			
+			survey_modal.find('.modal-footer').append(cancel_btn);
+			
+			
+			change_survey_screen('finish');
+			
+		}
+		
+		$('p.sign-guest-book>span.btn').on('click',function(){
+			$('div.guest-book>div.post-msg').css('visibility','visible').css('padding','5px').css('max-height','999px');
+		});
+		
+		function change_survey_confirm(src_el){
+			
+			// PAS OUBLIER LA TRADUCTION DES TEXTES EN I18N
+			
+			var confirm_modal = $('<div id="ChangeSurveyConfirmModal" class="modal" tabindex="-1" role="dialog">'+
+									 '<div class="modal-dialog" role="document">'+
+									 	'<div class="modal-content">'+
+									 		'<div class="modal-header">'+
+											 '<h5 class="modal-title">'+$.i18n._('a_survey_is_already_open')+'</h5>'+
+											 '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+											 	'<span aria-hidden="true">&times;</span>'+
+											 '</button>'+
+									 		'</div>'+
+											'<div class="modal-body">'+
+											 	'<p class="confirm-msg">'+$.i18n._('do_you_want_to_finish_prev_survey')+'</p>'+
+											'</div>'+
+											'<div class="modal-footer">'+
+												'<button type="button" class="btn btn-sm btn-primary float-left continue-prev-survey">'+$.i18n._('continue_prev_survey')+'</button>'+
+												'<button type="button" class="btn btn-sm btn-primary begin-new-survey">'+$.i18n._('begin_new_survey')+'</button>'+
+												'<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">'+$.i18n._('close')+'</button>'+
+											'</div>'+
+									 	'</div>'+
+									 '</div>'+
+								  '</div>');
+			
+			// Bouton : Continuer le précédent
+			confirm_modal.find('button.continue-prev-survey').on('click',function(){
+				// On masque le message de confirmation
+				// Note : Bootstrap only supports one modal window at a time
+				confirm_modal.modal('hide');
+				
+				// On affiche le sondage qui était en arrière-plan
+				$('div#RespondToSurveyModal').modal('show');
+				
+				// Puis, on supprime la fenêtre modale (msg de confirmation)
+				// modal dispose : It destroys the jQuery instance of the Bootstrap's Modal component
+				// MAIS PAS LE CODE HTML AJOUTE DANS LE DOM
+				// remove : supprime le code HTML associé dans le DOM
+				confirm_modal.modal('dispose').remove();
+			});
+			
+			// Bouton : Commencer le nouveau
+			confirm_modal.find('button.begin-new-survey').on('click',function(){
+				// On masque le message de confirmation
+				// Note : Bootstrap only supports one modal window at a time
+				confirm_modal.modal('hide');
+				
+				// On enleve la fenêtre modale du sondage qui se trouvait en arrière-plan
+				$('div#RespondToSurveyModal').remove();
+				// Puis, on ouvre le nouveau sondage
+				open_survey_click_event(src_el);
+				
+				// Et enfin, on supprime la fenêtre modale (msg de confirmation)
+				// modal dispose : It destroys the jQuery instance of the Bootstrap's Modal component
+				// MAIS PAS LE CODE HTML AJOUTE DANS LE DOM
+				// remove : supprime le code HTML associé dans le DOM
+				confirm_modal.modal('dispose').remove();
+			});
+			
+			$('body').append(confirm_modal);
+			
+			$('#ChangeSurveyConfirmModal').modal('show');
+			
+		}
+		
+		$('div#forma-step-num>a').on('click',function(e){
+			// Load a Bootstrap popover content with AJAX
+			// https://medium.com/cagataygurturk/load-a-bootstrap-popover-content-with-ajax-8a95cd34f6a4
+			
+			e.preventDefault();
+			
+			if($(this).attr('data-modal-status') != 'loading'){
+			
+				var src_el = $(this);
+				var formation_name = src_el.attr('data-course-name');
+				var current_step_num = src_el.attr('data-step-num');
+				
+				src_el.attr('data-modal-status','loading');
+
+				$.ajax({
+				  type: 'POST',
+				  url: '/ajax/course/get-summary',
+				  data: {
+					  formation_name: formation_name,
+				  },
+				  success: function(formation){
+
+					  src_el.attr('data-modal-status','loaded');
+					  
+					  // Une fois le contenu chargé en ajax,
+					  // le popover sera initialisé avec le contenu récupéré
+					  // depuis le serveur, notre évenement click perso
+					  // doit donc être enlevé étant donné que les prochains
+					  // affichages seront gérés en statiques par popover.
+					  src_el.off('click');
+
+					  var ul_summary = $('<ul/>').attr('id','forma-summary-popup');
+
+					  $.each(formation.formations_steps, function(step_index, forma_step) {
+						  var forma_li = $('<li/>');
+						  var forma_step_name = $('<h2/>').text(forma_step.name);
+						  var tutos_of_forma_step = $('<ul/>');
+
+						  $.each(formation.tutos, function(tuto_index, forma_tuto) {
+							  if(forma_step.step_number == forma_tuto.formation_step_number){
+								  // Si c'est un tuto qui correspond à l'étape souhaitée
+								  // on l'affiche maintenant, sinon il sera affiché plus tard
+								  // lorsque l'on sera arrivé à la bonne étape.
+								  var forma_tuto_name = $('<h3/>').text(forma_tuto.step_name);
+								  var tuto_link = $('<a/>').attr('href',forma_tuto.tuto_url);
+								  var linked_tuto_li = $('<li/>');
+								  
+								  if(forma_tuto.formation_order == current_step_num){
+									  tuto_link.addClass('you-are-here').attr('title',$.i18n._('you_are_here'));
+								  }
+
+								  forma_tuto_name.appendTo(tuto_link);
+								  tuto_link.appendTo(linked_tuto_li);
+								  linked_tuto_li.appendTo(tutos_of_forma_step);
+							  }
+						  });
+
+						  forma_li.append(forma_step_name);
+						  forma_li.append(tutos_of_forma_step);
+						  forma_li.appendTo(ul_summary);
+					  });
+
+					  src_el.popover({
+							title: $.i18n._('course_summary'),
+							placement: 'bottom',
+							container: '#forma-step-num',
+						    html: true,
+							content: ul_summary
+					  }).popover('show');
+
+				  },
+				  error: function () {
+					  src_el.attr('data-modal-status','error');
+					  alert($.i18n._('error_occured_get_course_summary'));
+				  },
+				  dataType:"json"
+				});
+			}
+		});
+		
+		// Sélection automatique de l'onglet "InformatiWeb ou "InformatiWeb Pro"
+		// dans la gestion des favoris de l'espace membre
+		if($('div#MemberFavoritesTabsContents').length > 0 && window.location.hash) {
+			var hash = window.location.hash.substring(1); //Puts hash in variable, and removes
+			
+			if($('a[href="#'+hash+'"]').length > 0){
+				$('a[href="#'+hash+'"]').tab('show');
+			}
+			
+	  	}
+		
+		
+		
+		// --- Read more - less - BEGIN ---
+		// Src : http://jsfiddle.net/0sf4hc63/
+		// Bouton : Voir plus / Voir moins (pour les descriptions)
+		var read_more_src_block = $('.description-with-read-more');
+		if(read_more_src_block.length > 0){
+			var read_more_src_block_height = read_more_src_block.height();
+			var read_more_src_block_max_height = Number(read_more_src_block.css('max-height').replace('px',''));
+
+			// On récupère le texte pour les 2 boutons depuis des attributs "data-*"
+			// définis sur le bloc à réduire/agrandir
+			var read_more_text = read_more_src_block.attr('data-read-more-text');
+			var read_less_text = read_more_src_block.attr('data-read-less-text');
+
+			var read_more_btn = $('<span/>').addClass('read-more btn btn-primary btn-sm').text(read_more_text);
+			var read_less_btn = $('<span/>').addClass('read-less btn btn-primary btn-sm').text(read_less_text);
+
+			var read_more_bar = $('<div/>').addClass('read-more-btns');
+			read_more_bar.append(read_less_btn);
+			read_more_bar.append(read_more_btn);
+
+			// On place les boutons après le bloc à réduire/agrandir
+			read_more_bar.insertAfter(read_more_src_block);
+
+			// Si la hauteur du bloc est supérieure à la hauteur max
+			// spécifiée dans les styles css grâce à la classe "read-more-max"
+			if (read_more_src_block_height > read_more_src_block_max_height-1) {
+
+				// On gère l'affichages ou non des boutons
+				// voir plus / moins
+				read_more_btn.click(function () {
+					//read_more_src_block.removeClass('read-more-max');
+					read_more_src_block.css('max-height','');
+					read_more_btn.hide();
+					read_less_btn.show();
+				});
+
+				read_less_btn.click(function () {
+					//read_more_src_block.addClass('read-more-max');
+					read_more_src_block.css('max-height',read_more_src_block_max_height+'px');
+					read_more_btn.show();
+					read_less_btn.hide();
+				});
+
+			} else {
+				// Sinon, les 2 boutons seront masqués
+				read_more_btn.hide();
+				read_less_btn.hide();
+			}
+		}
+		// --- Read more - less - END ---
+		
+		
+		
+	}); // END - IF document ready
+	
+}());
+
+function init_ajax_search(jquery_selector_for_search_input,search_menu_my_pos,search_menu_at_pos,extra_options){
+	'use strict';
+	
+	if($(jquery_selector_for_search_input).length <= 0){
+		return false;
+	}
+	
+	if(jQuery().autocomplete){
+		
+		if (window.matchMedia("(max-width: 600px)").matches){
+			search_menu_my_pos = 'left top';
+			search_menu_at_pos = 'left bottom';
+		}
+		
+		// Moteur de recherche en haut du site
+		var global_ajax_search_cache = {};
+		$(jquery_selector_for_search_input).autocomplete({
+		  minLength: 3,
+		  messages: {
+				// https://stackoverflow.com/questions/13011127/how-to-remove-change-jquery-ui-autocomplete-helper-text/13091534#13091534
+				noResults: '',
+				results: function() {}
+		  },
+		  position: { my : search_menu_my_pos, at: search_menu_at_pos },
+		  source: function(request, response) {
+				var term = request.term;
+				if (term in global_ajax_search_cache) {
+					response(global_ajax_search_cache[term]);
+					return;
+				}
+
+				// Le terme à rechercher doit être composé
+				// d'au moins 3 caractères.
+				if(term.length < 3){
+					return;
+				}
+
+				// Permet d'afficher les fiches non publiées dans les résultats de recherche
+				// NOTE : cette option est vérifiée côté serveur aussi, par sécurité.
+				if(typeof extra_options.admin !== "undefined"){
+					if(extra_options.admin === true){
+						request.admin = 1; // Permet de lister aussi les données non publiés
+					}
+				}
+			  
+			  	var ajax_url = '';
+			  	if(typeof extra_options.ajax_url !== "undefined"){
+					if(extra_options.ajax_url != ''){
+						ajax_url = extra_options.ajax_url;
+					} else {
+						alert('ERREUR : URL ajax manquante');
+						return false;
+					}
+				} else {
+					alert('ERREUR : URL ajax manquante');
+					return false;
+				}
+			  	
+			  	
+				$.ajax({
+					// The URL for the request
+					url: ajax_url,
+					// The data to send (will be converted to a query string)
+					data: request,
+					// Whether this is a POST or GET request
+					type: "POST",
+					// The type of data we expect back
+					dataType : "json",
+				})
+				.done(function( data ) {
+					// Code to run if the request succeeds (is done);
+					// The response is passed to the function
+					global_ajax_search_cache[term] = data;
+					
+					if(data.length === 0){
+						data.push({data_type:'notfound'});
+					}
+					
+					response(data);
+				});
+			},
+			select: function( event, ui ) {
+				$("input.global-ajax-search").val( ui.item.name );
+				
+				if(typeof extra_options.select_data_dest !== "undefined"){
+					$.each(extra_options.select_data_dest, function(field_name,js_selector) {
+						$(js_selector).val(ui.item[field_name]);
+					});
+				}
+				
+				if(typeof extra_options.add_check_icon !== "undefined"){
+					if(extra_options.add_check_icon === true){
+						$(jquery_selector_for_search_input)
+							.removeClass('is-invalid').addClass('is-valid')
+							.parent().parent().removeClass('has-danger').addClass('has-success');
+					}
+				}
+				
+				if(typeof extra_options.store_name_as_data_attr !== "undefined"){
+					var res_name = extra_options.store_name_as_data_attr;
+					$(jquery_selector_for_search_input).attr('data-selected-name',ui.item[res_name]);
+				}
+
+				return false;
+		  }
+		})
+		.autocomplete( "instance" )._renderItem = render_autocomplete_global_search_item;
+		
+		$(jquery_selector_for_search_input).autocomplete("instance")._resizeMenu = function () {
+			var ul = this.menu.element;
+			
+			var orig_menu_width = 500; // Largeur normale utilisée sur PC
+			
+			var body_width = parseInt($('body').css('width')); // Récupère la largeur du body et enleve le "px" de fin avec parseint
+			var test_width = body_width - 24; // Largeur du body - 2*12 (margin left + right)
+			
+			if(test_width < 500){
+				// On est sur mobile, donc on rétrecit la largeur
+				// de la liste pour qu'elle s'adapte à la largeur de l'écran.
+				ul.outerWidth(test_width);
+			} else {
+				// On est sur PC, donc on utilise la largeur normale de 500px
+				ul.outerWidth(orig_menu_width);
+			}
+			
+		};
+		
+		$(jquery_selector_for_search_input).autocomplete("instance")._renderMenu = function(ul, items) {
+			
+		    $(ul).addClass('ajax-search-result');
+			
+			if(typeof extra_options.click_type !== "undefined"){
+				if(extra_options.click_type == 'select-result'){
+					$(ul).addClass('select-result-only');
+				}
+			}
+			
+			var that = this;
+		    $.each( items, function( index, item ) {
+			  that._renderItemData( ul, item );
+		    });
+			
+		};
+		
+	}
+	
+	function render_autocomplete_global_search_item(ul, item){
+		
+		// Pas de résultat trouvé
+		if(item.data_type === 'notfound'){
+			return $('<li class="no-result-found"></li>')
+			.append(
+					  '<span class="icon">'+
+						'<i class="fas fa-times"></i>'+
+					  '</span>'+
+
+					  '<span class="error-infos">'+
+						'<span class="title">'+$.i18n._('no_result_found')+'</span><br />'+
+						'<span class="text"></span>'+
+					  '</span>')
+			.appendTo(ul);
+		}
+		
+		// Formation trouvée
+		if(item.data_type === 'formation'){
+			
+			var logo_url = '/images/site/no-img.jpg';
+			
+			if(item.formation_logo !== ''){
+				logo_url = '/images/formations/logos/'+current_lang+'/mini/'+item.formation_logo;
+			}
+			
+			var forma_href_url = item.formation_url;
+			if(ul.hasClass('select-result-only')){
+				forma_href_url = 'javascript:void(0);';
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+forma_href_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+logo_url+'" alt="'+item.formation_name+'" />'+
+							'<span class="badge badge-info">'+$.i18n._('course')+'</span>'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.formation_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.cat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.formation_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Formation trouvée
+		if(item.data_type === 'formation-pro'){
+			
+			var forma_logo_url = '//'+fr_iw_domain+'/images/site/no-img.jpg';
+			
+			if(item.formation_mini_logo !== ''){
+				forma_logo_url = '/images/formations/logos/'+$.i18n._('current_lang')+'/mini/'+item.formation_logo;
+			}
+			
+			var forma_href_url = item.formation_url;
+			if(ul.hasClass('select-result-only')){
+				forma_href_url = 'javascript:void(0);';
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+forma_href_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+forma_logo_url+'" alt="'+item.formation_name+'" />'+
+							'<span class="badge badge-info">'+$.i18n._('course')+'</span>'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.formation_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.subcat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.formation_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Tuto trouvé
+		if(item.data_type === 'tuto'){
+			
+			var tuto_logo_url = '/images/site/no-img.jpg';
+			
+			if(item.tuto_logo !== ''){
+				tuto_logo_url = '/images/tutoriels/logos/'+current_lang+'/mini/'+item.tuto_logo;
+			}
+			
+			var tuto_href_url = item.tuto_url;
+			if(ul.hasClass('select-result-only')){
+				tuto_href_url = 'javascript:void(0);';
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+tuto_href_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+tuto_logo_url+'" alt="'+item.tuto_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.tuto_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.subcat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.tuto_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Catégorie de tuto trouvée
+		if(item.data_type === 'tuto-cat'){
+			
+			var subcat_icon_url = '/images/site/no-img.jpg';
+			
+			if(item.subcat_icon_name !== ''){
+				subcat_icon_url = '/images/tutoriels/sous-categories/icones/'+item.subcat_icon_name;
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+item.subcat_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+subcat_icon_url+'" alt="'+item.subcat_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-cat-name">'+item.subcat_name+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Sujet de tuto trouvée
+		if(item.data_type === 'tuto-subject'){
+			
+			var subject_icon_url = '/images/site/no-img.jpg';
+			
+			if(item.subject_icon_name !== ''){
+				subject_icon_url = '/images/tutoriels/sujets/icones/'+item.subject_icon_name;
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+item.subject_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+subject_icon_url+'" alt="'+item.subject_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-cat-name">'+item.subject_name+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Produit pour tutos trouvé
+		if(item.data_type === 'tuto-product'){
+			
+			var product_icon_url = '//'+fr_iw_domain+'/images/site/no-img.jpg';
+			
+			if(item.product_icon_name !== ''){
+				product_icon_url = '/images/tutoriels/products/icones/'+item.product_icon_name;
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+item.product_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+product_icon_url+'" alt="'+item.product_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-cat-name">'+item.product_name+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Logiciel trouvé
+		if(item.data_type === 'logiciel'){
+			
+			var logiciel_icon_url = '/images/site/no-img.jpg';
+			
+			if(item.logiciel_icon !== ''){
+				logiciel_icon_url = '/images/logiciels/logiciels/icones/thumbs/'+item.logiciel_icon;
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+item.logiciel_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+logiciel_icon_url+'" alt="'+item.logiciel_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.logiciel_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.cat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.logiciel_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Logiciel trouvé
+		if(item.data_type === 'logiciel-linux'){
+			
+			var logiciel_icon_url = '/images/site/no-img.jpg';
+			
+			if(item.logiciel_icon !== ''){
+				logiciel_icon_url = '/images/logiciels-linux/logiciels/icones/thumbs/'+item.logiciel_icon;
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+item.logiciel_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+logiciel_icon_url+'" alt="'+item.logiciel_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.logiciel_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.cat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.logiciel_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+		// Logiciel trouvé
+		if(item.data_type === 'our_program'){
+			
+			var our_program_icon_url = '/images/site/no-img.jpg';
+			
+			if(item.our_program_icon !== ''){
+				our_program_icon_url = '/images/nos-programmes/nos-programmes/icones/thumbs/'+item.our_program_icon;
+			}
+			
+			var our_program_href_url = item.our_program_url;
+			if(ul.hasClass('select-result-only')){
+				our_program_href_url = 'javascript:void(0);';
+			}
+			
+			return $('<li></li>')
+				.append('<a href="'+our_program_href_url+'">'+
+						  '<span class="logo">'+
+							'<img src="'+our_program_icon_url+'" alt="'+item.our_program_name+'" />'+
+						  '</span>'+
+
+						  '<span class="result-infos">'+
+							'<span class="result-name">'+item.our_program_name+'</span><br />'+
+							'<span class="result-category"><i class="far fa-folder-open"></i> '+item.cat_name+'</span><br />'+
+							'<span class="result-date"><i class="far fa-clock"></i> '+item.our_program_added_date+'</span>'+
+						  '</span>'+
+						'</a>')
+				.appendTo(ul);
+		}
+		
+	}
+}
+
+function GetIEVersion() {
+  'use strict';
+
+  var sAgent = window.navigator.userAgent;
+  var Idx = sAgent.indexOf("MSIE");
+
+  // If IE, return version number.
+  if (Idx > 0) {
+	return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+ 
+  // If IE 11 then look for Updated user agent string.
+  } else if (!!navigator.userAgent.match(/Trident\/7\./)) {
+    return 11;
+  } else {
+	  return 0; //It is not IE
+  }
+  
+}
+
+// Source : https://stackoverflow.com/questions/7467840/nl2br-equivalent-in-javascript
+function nl2br (str, is_xhtml) {
+    if (typeof str === 'undefined' || str === null) {
+        return '';
+    }
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}

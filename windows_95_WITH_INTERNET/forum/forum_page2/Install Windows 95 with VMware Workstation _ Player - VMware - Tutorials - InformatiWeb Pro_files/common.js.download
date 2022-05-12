@@ -1,0 +1,387 @@
+var curr_lang_iw_pro_domain = window.location.hostname.replace('informatiweb','informatiweb-pro');
+
+(function () {
+	'use strict';
+	
+	$(document).ready(function() {
+		
+		// -- Ajout d'un bouton "retour en haut" --
+		var scroll_top_btn = $('<div id="scroll-top"><i class="fas fa-angle-up"></i></div>').on('click',function(){ $('html,body').animate({scrollTop: 0}, 'slow'); });
+		$('body').append(scroll_top_btn);
+		
+		$(window).scroll(function() {
+
+			// Gère l'affichage du bouton créé ci-dessus
+			if(window.pageYOffset > 0){
+				$('div#scroll-top').css('display','block');
+			} else {
+				$('div#scroll-top').css('display','none');
+			}
+			
+		});
+		// -- Ajout d'un bouton "retour en haut" --
+		
+		
+		// Enleve le message de succès ou d'erreur automatiquement après 3 secondes.
+	    setTimeout(function(){
+	  	    $('div.alert.alert-dismissible').remove();
+	    }, 4000);
+		
+		// Si le plugin tooltipster est chargé
+		if(jQuery().tooltipster){
+			
+			$('.tooltipster').tooltipster({
+				updateAnimation: null,
+				maxWidth: 400
+			});
+			
+			$('.tooltipster_html').tooltipster({
+				updateAnimation: null,
+				maxWidth: 410,
+				contentAsHTML: true
+			});
+			
+		}
+		
+		/* Espace membre - Modifier sa configuration (+ Support) - Type de PC */
+		$('select#support-config-pc-type-id').on('change',function(){
+			var pc_type_id = Number($(this).val());
+			
+			// RAZ - et blocs masqués par défaut
+			// si "Type de PC" non sélectionné
+			$('div.pc-portable,div.pc-fixe').css('display','none');
+			
+			if(pc_type_id === 1){
+				// PC fixe
+				$('div.pc-fixe').css('display','block');
+			} else if(pc_type_id === 2 || pc_type_id === 3){
+				// PC fixe de marque (2) ou PC portable (3)
+				$('div.pc-portable').css('display','block');
+			}
+			
+		});
+		
+		// Trigger : sélection "Type de PC"
+		$('select#support-config-pc-type-id').trigger('change');
+		
+		if($('select#support-category-id').length > 0){
+			// On se trouve sur une page où l'on peut sélectionner
+			// la catégorie de support (ajout de demandes, modif, ...)
+			
+			// Autocomplete - 1) InformatiWeb - Tutoriels
+			init_ajax_search('input#tuto-name','left top','left bottom',{
+				ajax_url: '/ajax/tutorials/search',
+				click_type:'select-result',
+				select_data_dest: {
+					// Clé : Nom de la donnée JS retournée par le serveur
+					// Valeur : sélecteur du champ input où placer cette donnée JS
+					tuto_id: 'input#tuto-id',
+					tuto_name: 'input#tuto-name',
+				},
+				store_name_as_data_attr: 'tuto_name',
+				add_check_icon: true,
+			});
+			
+			// Autocomplete - 2) InformatiWeb - Formations
+			init_ajax_search('input#formation-name','left top','left bottom',{
+				ajax_url: '/ajax/courses/search',
+				click_type:'select-result',
+				select_data_dest: {
+					formation_id: 'input#formation-id',
+					formation_name: 'input#formation-name',
+				},
+				store_name_as_data_attr: 'formation_name',
+				add_check_icon: true,
+			});
+			
+			// Autocomplete - 3) InformatiWeb - Nos programmes
+			init_ajax_search('input#our-program-name','left top','left bottom',{
+				ajax_url: '/ajax/our-programs/search',
+				click_type:'select-result',
+				select_data_dest: {
+					our_program_id: 'input#our-program-id',
+					our_program_name: 'input#our-program-name',
+				},
+				store_name_as_data_attr: 'our_program_name',
+				add_check_icon: true,
+			});
+			
+			// Autocomplete - 6) InformatiWeb Pro - Tutoriels
+			init_ajax_search('input#iw-pro-tuto-name','left top','left bottom',{
+				ajax_url: '//'+curr_lang_iw_pro_domain+'/ajax/tutorials/search',
+				click_type:'select-result',
+				select_data_dest: {
+					tuto_id: 'input#iw-pro-tuto-id',
+					tuto_name: 'input#iw-pro-tuto-name',
+				},
+				store_name_as_data_attr: 'tuto_name',
+				add_check_icon: true,
+			});
+			
+			// Autocomplete - 7) InformatiWeb Pro - Formations
+			init_ajax_search('input#iw-pro-formation-name','left top','left bottom',{
+				ajax_url: '//'+curr_lang_iw_pro_domain+'/ajax/courses/search',
+				click_type:'select-result',
+				select_data_dest: {
+					formation_id: 'input#iw-pro-formation-id',
+					formation_name: 'input#iw-pro-formation-name',
+				},
+				store_name_as_data_attr: 'formation_name',
+				add_check_icon: true,
+			});
+			
+			// Autocomplete - 8) InformatiWeb Pro - Nos programmes
+			init_ajax_search('input#iw-pro-our-program-name','left top','left bottom',{
+				ajax_url: '//'+curr_lang_iw_pro_domain+'/ajax/our-programs/search',
+				click_type:'select-result',
+				select_data_dest: {
+					our_program_id: 'input#iw-pro-our-program-id',
+					our_program_name: 'input#iw-pro-our-program-name',
+				},
+				store_name_as_data_attr: 'our_program_name',
+				add_check_icon: true,
+			});
+			
+			
+			
+			
+			
+			
+			// -- Evenements onChange des champs "***-name" :
+			// Affiche le champ en rouge si l'utilisateur tente d'indiquer
+			// un nom incorrect dans le champ "-name" après avoir
+			// sélectionné un bon résultat depuis l'autocomplete
+			
+			// Evenement onChange - 1) InformatiWeb - Tutoriels
+			$('input#tuto-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#tuto-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+			// Evenement onChange - 2) InformatiWeb - Formations
+			$('input#formation-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#formation-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+			// Evenement onChange - 3) InformatiWeb - Nos programmes
+			$('input#our-program-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#our-program-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+			// Evenement onChange - 6) InformatiWeb Pro - Tutoriels
+			$('input#iw-pro-tuto-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#iw-pro-tuto-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+			// Evenement onChange - 7) InformatiWeb Pro - Formations
+			$('input#iw-pro-formation-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#iw-pro-formation-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+			// Evenement onChange - 8) InformatiWeb Pro - Nos programmes
+			$('input#iw-pro-our-program-name').on('change',function(){
+				// Evenement "onChange" du champ "-name"
+				var id_field = $('input#iw-pro-our-program-id');
+				var name_field = $(this);
+
+				support_change_name_field_state(id_field,name_field);
+			});
+			
+		}
+		
+		//$('input#tuto-name').on('change',function(){
+			
+			//var id_field = $('input#tuto-id');
+			//var name_field = $(this);
+			
+			//support_change_name_field_state(id_field,name_field);
+			
+			
+			/*var el_this = $(this);
+			var already_selected_name = el_this.attr('data-selected-name');
+			if(typeof already_selected_name === "undefined" || already_selected_name == ''){
+				return true;
+			}
+			
+			if(already_selected_name != el_this.val()){
+				// L'utilisateur a changé manuellement le texte du champ
+				// Donc, on affiche une icône d'erreur à droite du champ
+				$(el_this)
+					.removeClass('is-valid').addClass('is-invalid')
+					.parent().parent().removeClass('has-success').addClass('has-danger');
+				
+				// On vide le champ ID associé
+				$('input#tuto-id').val(0);
+				
+				// et l'attribut "data-selected-name" du champ input (pour le nom)
+				el_this.attr('data-selected-name','');
+			}*/
+			
+		//});
+		
+		function support_change_name_field_state(id_field,name_field){
+			
+			// Si aucun résultat n'a encore été sélectionné
+			// auparavant, on ne fait rien
+			var already_selected_name = name_field.attr('data-selected-name');
+			if(typeof already_selected_name === "undefined" || already_selected_name == ''){
+				return true;
+			}
+			
+			// Par contre, si un bon résultat (tuto, formation, ...) avait été
+			// sélectionné auparavant et que l'utilisateur modifie le texte du champ "...-name"
+			// alors on met le champ en rouge et on affiche une icône d'erreur à droite du champ.
+			// 
+			// L'erreur sera ensuite enlevée lorsque l'utilisateur sélectionnera un bon résultat
+			// via le système d'autocomplete pré-activé sur le champ "-name".
+			if(already_selected_name != name_field.val()){
+				// L'utilisateur a changé manuellement le texte du champ
+				// Donc, on affiche une icône d'erreur à droite du champ
+				name_field
+					.removeClass('is-valid').addClass('is-invalid')
+					.parent().parent().removeClass('has-success').addClass('has-danger');
+				
+				// On vide le champ ID associé
+				id_field.val(0);
+				
+				// et l'attribut "data-selected-name" du champ input (pour le nom)
+				name_field.attr('data-selected-name','');
+			}
+			
+		}
+		
+		$('select#support-category-id').on('change',function(){
+			
+			var selected_cat_val = Number($(this).val());
+			
+			var ajax_url = '';
+			var select_id_to_update = '';
+			
+			// -- RAZ des champs ID et name --
+			// 1) InformatiWeb - Tutoriels
+			if(selected_cat_val != 1){
+				$('input#tuto-id,input#tuto-name').val('');
+			}
+			// 2) InformatiWeb - Formations
+			if(selected_cat_val != 2){
+				$('input#formation-id,input#formation-name').val('');
+			}
+			// 3) InformatiWeb - Nos programmes
+			if(selected_cat_val != 3){
+				$('input#our-program-id,input#our-program-name').val('');
+			}
+			// 6) InformatiWeb Pro - Tutoriels
+			if(selected_cat_val != 6){
+				$('input#iw-pro-tuto-id,input#iw-pro-tuto-name').val('');
+			}
+			// 7) InformatiWeb Pro - Formations
+			if(selected_cat_val != 7){
+				$('input#iw-pro-formation-id,input#iw-pro-formation-name').val('');
+			}
+			// 8) InformatiWeb Pro - Nos programmes
+			if(selected_cat_val != 8){
+				$('input#iw-pro-our-program-id,input#iw-pro-our-program-name').val('');
+			}
+			
+			
+			// -- On maque tous les champs noms --
+			// 1) InformatiWeb - Tutoriels
+			$('input#tuto-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			// 2) InformatiWeb - Formations
+			$('input#formation-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			// 3) InformatiWeb - Nos programmes
+			$('input#our-program-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			// 6) InformatiWeb Pro - Tutoriels
+			$('input#iw-pro-tuto-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			// 7) InformatiWeb Pro - Formations
+			$('input#iw-pro-formation-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			// 8) InformatiWeb Pro - Nos programmes
+			$('input#iw-pro-our-program-name')
+				.attr('data-selected-name','')
+				.removeClass('is-valid').removeClass('is-invalid')
+				.parent().parent().css('display','none').removeClass('has-success').removeClass('has-danger');
+			
+			
+			switch (selected_cat_val) {
+			  case 1:
+				// 1) InformatiWeb - Tutoriels
+				$('input#tuto-name').parent().parent().css('display','');
+				break;
+				
+			  case 2:
+				// 2) InformatiWeb - Formations
+				$('input#formation-name').parent().parent().css('display','');
+				break;
+				
+			  case 3:
+				// 3) InformatiWeb - Nos programmes
+				$('input#our-program-name').parent().parent().css('display','');
+				break;
+				
+			  case 6:
+				// 6) InformatiWeb Pro - Tutoriels
+				$('input#iw-pro-tuto-name').parent().parent().css('display','');
+				break;
+				
+			  case 7:
+				// 7) InformatiWeb Pro - Formations
+				$('input#iw-pro-formation-name').parent().parent().css('display','');
+				break;
+				
+			  case 8:
+				// 8) InformatiWeb Pro - Nos programmes
+				$('input#iw-pro-our-program-name').parent().parent().css('display','');
+				break;
+				
+			  default:
+				// Rien a faire pour les autres catégories de support
+			}
+			
+		});
+		
+		$('select#support-category-id').trigger('change');
+		
+		// FIX : ajoute la classe "is-invalid" sur le faux champ input de type "text"
+		// depuis le vrai champ (de type "file") qui est en "display:none",
+		// car celui affiché est customisé.
+		$('input[type=file].is-invalid').each(function() {
+		    $('input#'+this.id+'-input').addClass('is-invalid');
+		});
+		
+	}); // FIN - document ready
+	
+}());
