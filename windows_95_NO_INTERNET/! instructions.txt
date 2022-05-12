@@ -1,3 +1,6 @@
+Go to https://winworldpc.com/product/windows-95/osr-2 and download Windows 95 OSR2 (OEM) (ISO)
+name it windows95.iso
+
 boot virtualbox with windows95b.iso as a disk
 add Dos6.22.img as a diskette
 
