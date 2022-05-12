@@ -1,0 +1,12 @@
+boot virtualbox with windows95b.iso as a disk
+add Dos6.22.img as a diskette
+
+reboot
+write fdisk
+choose option 1 and yes on all
+
+write format c: after rebooting
+
+type r:
+
+then setup
