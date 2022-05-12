@@ -1,1 +1,30 @@
-a
+Download windows95b and windows95b.iso.uibak and put them in a folder (LINK)
+
+If the link does not work, then you must use the normal windows 95 ISO, but you have to use UltraISO premium to extract all .cab files into a folder called FDD from the root folder in the windows 95 CD-ROM
+I will be saving the forum html page in case it's lost, for instructions
+
+So, assuming we have all the required files, we start by just booting with windows95b.iso
+With a dos diskette iso containing the sources.bat file in its root directory.
+
+Type fdisk in the terminal to create partition
+Type format c: to format the C drive
+
+type sources to copy all the files it needs into C:/FDD
+Type r:
+
+Then type setup
+
+It's going to eventually ask for netapi.dll, this is very important. If you were able to obtain the windows95b.iso from me, then you just need to type in C:/FDD/PRECOPY2. If not, you will need to go in the windows95b.iso, and add the netapi32.dll into FDD/PRECOPY2, but renamed as netapi.dll.
+
+FOLLOWING ALONG
+
+mapi32.dll will be in C:/FDD/WIN95_09 no matter what. If it's not, then you can always put it in there yourself.
+
+The rest of the files will probably be copied automatically. (I'm so sorry if they don't, this thing is really old)
+
+LATER ON, AND THIS IS IMPORTANT BECAUSE IT'S NOT IN THE FORUM:
+
+You will want to setup the network through the control panel. To do this you open it, go to network, then add a protocol TCP/IP from the microsoft provider.
+It will ask for arp.exe, which is on disk 18, AKA C:/FDD/WIN95_18
+
+It will then restart, and you're on motherbadda!!!! you are now using something epic
